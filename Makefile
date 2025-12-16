@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 OS := $(shell uname -s)
 PACKAGES_FILE := packages.stow
-PACKAGES != [ -f $(PACKAGES_FILE) ] && awk 'NF && $$1 !~ /^#/' $(PACKAGES_FILE)
+PACKAGES := $(shell awk 'NF && $$1 !~ /^\043/' "$(PACKAGES_FILE)" 2>/dev/null)
 STOW := stow
 STOW_FLAGS := --dotfiles --target="$(HOME)"
 BACKUP_ROOT := $(HOME)/.dotfiles_backup
