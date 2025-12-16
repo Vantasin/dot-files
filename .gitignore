@@ -1,0 +1,23 @@
+# OS junk
+.DS_Store
+.AppleDouble
+.Spotlight-V100
+
+# Editor backups
+*~
+*.swp
+*.swo
+*.tmp
+
+# Local caches & virtual envs
+.cache/
+.direnv/
+.venv/
+venv/
+node_modules/
+
+# Antidote/plugin clones (user-specific)
+.antidote/
+
+# Stow adopt backups (if used)
+stow-local-backup*/

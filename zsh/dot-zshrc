@@ -1,0 +1,56 @@
+# Interactive shell configuration (plugins via Antidote, symlinks via Stow).
+
+[[ $- != *i* ]] && return
+
+shell_dir="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
+[[ -f "${shell_dir}/exports.zsh" ]] && source "${shell_dir}/exports.zsh"
+
+mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
+[[ -n ${HISTFILE:-} ]] && mkdir -p "${HISTFILE:h}"
+
+setopt autocd
+setopt extended_glob
+setopt hist_ignore_all_dups
+setopt inc_append_history
+setopt interactivecomments
+setopt noclobber
+setopt nobeep
+setopt prompt_subst
+setopt share_history
+
+autoload -Uz compinit
+_comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
+compinit -d "$_comp_dump"
+zmodload -i zsh/complist
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
+
+for file in aliases functions keybinds prompt; do
+  [[ -f "${shell_dir}/${file}.zsh" ]] && source "${shell_dir}/${file}.zsh"
+done
+unset file shell_dir _comp_dump
+
+ANTIDOTE_DIR="${ANTIDOTE_DIR:-$HOME/.antidote}"
+ZSH_PLUGINS_FILE="${ZSH_PLUGINS_FILE:-$HOME/.zsh_plugins.txt}"
+if [[ -r "${ANTIDOTE_DIR}/antidote.zsh" ]]; then
+  source "${ANTIDOTE_DIR}/antidote.zsh"
+  if [[ -r "$ZSH_PLUGINS_FILE" ]]; then
+    antidote load < "$ZSH_PLUGINS_FILE"
+  else
+    print -P "%F{yellow}# No plugins declared in ${ZSH_PLUGINS_FILE}.%f" >&2
+  fi
+else
+  print -P "%F{yellow}# Antidote not found at ${ANTIDOTE_DIR}; skipping plugin load.%f" >&2
+fi
+
+# Show quick system info once per interactive shell (skip with SKIP_SYSINFO=1).
+if [[ -z "${SKIP_SYSINFO:-}" ]]; then
+  case "$OSTYPE" in
+    darwin*) cmd=fastfetch ;;
+    linux*)  cmd=neofetch ;;
+    *)       cmd= ;;
+  esac
+  if [[ -n "${cmd:-}" ]] && command -v "$cmd" >/dev/null 2>&1; then
+    "$cmd"
+  fi
+fi

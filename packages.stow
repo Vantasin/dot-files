@@ -1,0 +1,10 @@
+# Packages managed by GNU Stow (one per line)
+zsh
+tmux
+git
+ranger
+neofetch
+btop
+bat
+ncdu
+nano

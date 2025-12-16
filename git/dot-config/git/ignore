@@ -1,0 +1,9 @@
+# Global ignore patterns
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.pyc
+__pycache__/
+.env
+*.log

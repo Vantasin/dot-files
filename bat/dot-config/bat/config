@@ -1,0 +1,4 @@
+# Bat configuration (see `man bat` for options).
+--paging=auto
+--style=plain
+--wrap=auto
