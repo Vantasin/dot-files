@@ -15,6 +15,18 @@ setopt interactivecomments
 setopt noclobber
 setopt nobeep
 setopt prompt_subst
+setopt append_history
+setopt inc_append_history
+setopt share_history
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
+setopt append_history
+setopt inc_append_history
+setopt share_history
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
 
 autoload -Uz compinit
 _comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
@@ -41,7 +53,7 @@ else
   print -P "%F{yellow}# Antidote not found at ${ANTIDOTE_DIR}; skipping plugin load.%f" >&2
 fi
 
-# Ensure history behavior is set after all plugins load.
+# Re-assert history behavior after plugins load.
 setopt append_history inc_append_history share_history hist_ignore_dups hist_ignore_all_dups hist_reduce_blanks
 
 # Show quick system info once per interactive shell (skip with SKIP_SYSINFO=1).
