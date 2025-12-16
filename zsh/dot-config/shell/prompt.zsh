@@ -2,24 +2,33 @@
 
 setopt prompt_subst
 
-autoload -Uz add-zsh-hook colors vcs_info
-colors
+case "${SKIP_VCS_INFO:-1}" in
+  1|true|yes|on) _skip_vcs=1 ;;
+  *)             _skip_vcs=0 ;;
+esac
 
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%F{yellow}(%b)%f'
-zstyle ':vcs_info:git:*' actionformats '%F{yellow}(%b|%a)%f'
+if [[ ${_skip_vcs:-0} -eq 0 ]]; then
+  autoload -Uz add-zsh-hook colors vcs_info
+  colors
 
-_prompt_vcs_info() {
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:git:*' check-for-changes true
+  zstyle ':vcs_info:git:*' formats '%F{yellow}(%b)%f'
+  zstyle ':vcs_info:git:*' actionformats '%F{yellow}(%b|%a)%f'
+
+  _prompt_vcs_info() {
   vcs_info_msg_0_=""
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     vcs_info
   fi
-}
-add-zsh-hook precmd _prompt_vcs_info
-add-zsh-hook chpwd _prompt_vcs_info
-# Seed once so the first prompt in a repo shows the branch.
-_prompt_vcs_info
+  }
+  add-zsh-hook precmd _prompt_vcs_info
+  add-zsh-hook chpwd _prompt_vcs_info
+  # Seed once so the first prompt in a repo shows the branch.
+  _prompt_vcs_info
+else
+  vcs_info_msg_0_=""
+fi
 
 # Use prompt_subst so ${vcs_info_msg_0_} expands.
 PROMPT="%F{cyan}%T%f %F{white}%n%f%F{magenta}@%f%F{white}%m%f %F{green}%~%f ${vcs_info_msg_0_} %F{yellow}%#%f "
