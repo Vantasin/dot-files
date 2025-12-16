@@ -5,6 +5,8 @@
 shell_dir="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
 [[ -f "${shell_dir}/exports.zsh" ]] && source "${shell_dir}/exports.zsh"
 
+# Force a shared, XDG-friendly history file for all sessions.
+export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
 mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 [[ -n ${HISTFILE:-} ]] && { mkdir -p "${HISTFILE:h}"; touch "${HISTFILE}"; }
 export ZSH_AUTOSUGGEST_STRATEGY=(history)

@@ -16,3 +16,6 @@ export PATH
 export EDITOR="${EDITOR:-nano}"
 export VISUAL="${VISUAL:-$EDITOR}"
 export PAGER="${PAGER:-less}"
+
+# Shared history path for all shells.
+export HISTFILE="${HISTFILE:-${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history}"
