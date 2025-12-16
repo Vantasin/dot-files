@@ -15,7 +15,6 @@
     { "type": "gpu",      "key": "GPU" },
     { "type": "memory",   "key": "Memory" },
     { "type": "disk", "key": "Disk /",     "folders": [ "/" ],    "showRemovable": true, "showUnknown": true },
-    { "type": "disk", "key": "Disk /tank", "folders": [ "/tank" ],"showRemovable": true, "showUnknown": true },
     { "type": "localip",  "key": "Local IP" }
   ]
 }
