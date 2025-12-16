@@ -40,7 +40,7 @@ setopt append_history inc_append_history share_history hist_ignore_dups hist_ign
 if [[ -z "${SKIP_SYSINFO:-}" ]]; then
   case "$OSTYPE" in
     darwin*) cmd=fastfetch ;;
-    linux*)  cmd=neofetch ;;
+    linux*)  cmd=fastfetch ;;
     *)       cmd= ;;
   esac
   if [[ -n "${cmd:-}" ]] && command -v "$cmd" >/dev/null 2>&1; then
