@@ -21,20 +21,12 @@ optional_packages=(zoxide lsd tree tldr)
 case "$ACTION" in
   install)
     sudo apt-get update
-    # Install core packages individually so one missing package does not block the rest.
+    # Install core packages individually; continue on failures.
     for pkg in "${packages[@]}"; do
-      if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
-        sudo apt-get install -y "$pkg" || echo "Skipping $pkg (install failed)"
-      else
-        echo "Skipping $pkg (not available in current apt sources)"
-      fi
+      sudo apt-get install -y "$pkg" || echo "Skipping $pkg (install failed or unavailable)"
     done
     for pkg in "${optional_packages[@]}"; do
-      if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
-        sudo apt-get install -y "$pkg" || echo "Skipping $pkg (install failed)"
-      else
-        echo "Skipping $pkg (not available in current apt sources)"
-      fi
+      sudo apt-get install -y "$pkg" || echo "Skipping $pkg (install failed or unavailable)"
     done
     cat <<'EOS'
 Reminder:

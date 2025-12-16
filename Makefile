@@ -74,8 +74,8 @@ backup:
 	files=( \
   .profile .zshrc .zshenv .zprofile .zlogin .zlogout \
 	  .gitconfig .tmux.conf .zsh_plugins.txt .nanorc \
-	  .config/btop .config/neofetch .config/ranger .config/bat \
-	  .config/nano .config/ncdu \
+  .config/btop .config/fastfetch .config/ranger .config/bat \
+  .config/nano .config/ncdu \
 	); \
 	repo_root="$$(pwd)"; \
 	cd "$$HOME"; \
