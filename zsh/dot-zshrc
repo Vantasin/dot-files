@@ -6,7 +6,7 @@ shell_dir="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
 [[ -f "${shell_dir}/exports.zsh" ]] && source "${shell_dir}/exports.zsh"
 
 mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
-[[ -n ${HISTFILE:-} ]] && mkdir -p "${HISTFILE:h}"
+[[ -n ${HISTFILE:-} ]] && { mkdir -p "${HISTFILE:h}"; touch "${HISTFILE}"; }
 
 setopt autocd
 setopt extended_glob
@@ -15,6 +15,11 @@ setopt noclobber
 setopt nobeep
 setopt prompt_subst
 setopt share_history
+setopt append_history
+setopt inc_append_history
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
 
 autoload -Uz compinit
 _comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
