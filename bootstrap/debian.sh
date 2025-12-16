@@ -22,13 +22,13 @@ case "$ACTION" in
   install)
     sudo apt-get update
     sudo apt-get install -y "${packages[@]}"
-    for pkg in "${optional_packages[@]}"; do
-      if apt-cache show "$pkg" >/dev/null 2>&1; then
-        sudo apt-get install -y "$pkg"
-      else
-        echo "Skipping $pkg (not available in current apt sources)"
-      fi
-    done
+for pkg in "${optional_packages[@]}"; do
+  if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
+    sudo apt-get install -y "$pkg" || echo "Skipping $pkg (install failed)"
+  else
+    echo "Skipping $pkg (not available in current apt sources)"
+  fi
+done
     cat <<'EOS'
 Reminder:
 - Debian/Ubuntu package 'bat' installs the 'batcat' binary; aliases handle this.
@@ -38,7 +38,7 @@ EOS
   uninstall)
     sudo apt-get remove -y "${packages[@]}" || true
     for pkg in "${optional_packages[@]}"; do
-      if apt-cache show "$pkg" >/dev/null 2>&1; then
+      if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
         sudo apt-get remove -y "$pkg" || true
       fi
     done
