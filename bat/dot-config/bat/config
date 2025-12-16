@@ -1,5 +1,7 @@
 # Bat configuration (see `man bat` for options).
---paging=auto
+#--paging=auto
+--paging=always
+--pager="less -FRSX --mouse"
 # --style=plain
 --wrap=auto
 --theme=default
