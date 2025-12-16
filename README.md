@@ -6,6 +6,10 @@
 - Stow handles placement; Antidote handles plugins; package managers (or bootstrap scripts) handle binaries.
 
 ## Quick Start (copy/paste)
+
+> **Note:** If you already have a real `~/.profile`, back it up or move it aside before stowing the `shell` package; Stow will not
+overwrite an existing file.
+
 macOS:
 ```sh
 brew install git stow rsync
@@ -22,8 +26,6 @@ cd ~/dot-files && make install
 > Use sudo only if required for package installs
 
 > What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow. It will refuse on conflicts rather than overwrite.
-
-> **Note:** If you already have a real `~/.profile`, back it up or move it aside before stowing the `shell` package; Stow will not overwrite an existing file.
 
 Reload Shell:
 ```sh
