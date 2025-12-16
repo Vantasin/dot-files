@@ -1,6 +1,5 @@
 # dot-files — Stow-managed, Antidote-powered dotfiles
 
-## Executive Summary
 - Minimal, auditable dotfiles using GNU Stow for symlinks and pure Zsh with Antidote for plugins.
 - For users who want explicit, reversible, XDG-friendly configs on macOS or Debian-based Linux.
 - Manages user-space configs only: zsh, git, tmux, ranger, fastfetch, btop, bat, ncdu, nano. No system services.
