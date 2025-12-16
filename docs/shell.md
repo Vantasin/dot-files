@@ -8,4 +8,4 @@
 
 ## Usage
 - Apply via Stow: `stow --dotfiles --target="$HOME" shell`.
-- If you have an existing `~/.profile`, back it up before stowing or use `stow --adopt` with care.
+- If you have an existing `~/.profile`, back it up or move it aside before stowing (Stow will refuse to overwrite a real file). `stow --adopt` is more intrusive—use only if you intend to absorb the file into the repo.
