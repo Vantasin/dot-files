@@ -10,7 +10,10 @@ zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' formats '%F{yellow}(%b)%f'
 zstyle ':vcs_info:git:*' actionformats '%F{yellow}(%b|%a)%f'
 
-_prompt_vcs_info() { vcs_info }
+_prompt_vcs_info() {
+  vcs_info_msg_0_=""
+  vcs_info
+}
 add-zsh-hook precmd _prompt_vcs_info
 # Seed once so the first prompt in a repo shows the branch.
 _prompt_vcs_info
