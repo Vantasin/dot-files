@@ -7,75 +7,56 @@
 - Stow handles placement; Antidote handles plugins; package managers (or bootstrap scripts) handle binaries.
 - Reference content in `reference/` is kept for posterity and not stowed.
 
-## Quick Start
-Prereqs: `zsh`, `git`, `stow` (optional tools listed in `bootstrap/macos.sh` / `bootstrap/debian.sh`).
-
-Get git/stow and clone, then run the installer:
+## Quick Start (copy/paste)
+macOS:
 ```sh
-# macOS
 brew install git stow rsync
 git clone https://github.com/Vantasin/dot-files.git ~/dot-files
 cd ~/dot-files && make install
+```
 
-# Debian/Ubuntu
+Debian/Ubuntu:
+```sh
 sudo apt-get update && sudo apt-get install -y git stow rsync
 git clone https://github.com/Vantasin/dot-files.git ~/dot-files
-cd ~/dot-files && make install   # use sudo only if required for package installs
+cd ~/dot-files && make install
 ```
+> Use sudo only if required for package installs
 
-One-shot (full lifecycle, more intrusive):
+> What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow. It will refuse on conflicts rather than overwrite.
+
+Reload Shell:
 ```sh
-cd ~/dot-files
-make install
+exec zsh
 ```
-> Runs: check → status (dry-run) → backup → bootstrap install → antidote → stow.
-
-Install Antidote:
-```sh
-git clone --depth=1 https://github.com/mattmc3/antidote ~/.antidote
-```
-
-Dry-run (recommended):
-```sh
-cd ~/dot-files
-make status    # or: stow -nv --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu
-```
-
-Apply:
-```sh
-make stow      # or: stow --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu
-```
-
-Verify:
-- `exec zsh`, ensure prompt/plugins load; `ls -l ~/.zshrc` points into `~/dot-files`.
-- Make zsh your login shell (optional): `chsh -s "$(command -v zsh)"` then restart the session.
+> Verify: `ls -l ~/.zshrc` points into `~/dot-files`
 
 Rollback:
 ```sh
-make unstow    # or: stow -D --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu
+cd ~/dot-files
+make unstow
+```
+> Or: `stow -D --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu`
+
+Backup:
+```sh
+cd ~/dot-files
+make backup
 ```
 
-Back up / Restore (optional):
+Restore:
 ```sh
-make backup
+cd ~/dot-files
 make restore BACKUP=~/.dotfiles_backup/<timestamp>
 ```
 
-## How it Works
-- Stow: packages mirror target paths; `--dotfiles` converts `dot-*` to dotted targets (e.g., `zsh/dot-zshrc` → `~/.zshrc`, `bat/dot-config/bat/config` → `~/.config/bat/config`). No custom linker scripts.
-- Antidote: plugins declared in `~/.zsh_plugins.txt` (zsh package) load via `antidote load` in `.zshrc`; defaults include `zsh-users/zsh-autosuggestions` and `zsh-users/zsh-syntax-highlighting` (last).
-- Separation: Stow places files; Antidote fetches plugins; package managers install binaries (bootstrap scripts are optional wrappers).
-- XDG: configs prefer `~/.config/<tool>/` for portability.
-
-## Repository Layout
-- Packages: `zsh/`, `git/`, `tmux/`, `ranger/`, `fastfetch/`, `btop/`, `bat/`, `ncdu/`, `nano/` (all use `dot-*` paths that stow to `$HOME`).  
-- Metadata: `packages.stow` (authoritative list), `Makefile` (stow/install/backup/restore), `bootstrap/` (optional installers).  
-- Reference only: `reference/oh-my-zsh/`, `reference/nano-syntax/`, `reference/nanorc`, `reference/config-legacy/` (not stowed).  
-
-## Notes / FAQ
-- Are dotfiles hidden in the repo? No—files use `dot-` prefixes; `--dotfiles` makes dotted symlinks.  
-- How to change plugins? Edit `~/.zsh_plugins.txt`, then open a new shell (or `antidote load < ~/.zsh_plugins.txt`).  
-- Why XDG paths? Keeps configs tidy under `~/.config` and consistent across OSes.  
+## More Details
+- Makefile: see [docs/makefile.md](docs/makefile.md) (targets, backup/restore, stow flow).
+- Zsh setup: see [docs/zsh.md](docs/zsh.md) (layout, history, Antidote, prompt toggle).
+- Fastfetch: see [docs/fastfetch.md](docs/fastfetch.md).
+- Packages overview: see [docs/packages.md](docs/packages.md).
+- Bootstrap scripts: see [docs/bootstrap.md](docs/bootstrap.md).
+- Other components: see docs for git, tmux, ranger, bat, btop, ncdu, nano, shell.
 
 ## License
-See `LICENSE`.
+[LICENSE](LICENSE)
