@@ -15,7 +15,7 @@ packages=(
   zoxide
   lsd
   tree
-  tldr
+  tlrc
   fastfetch
 )
 
@@ -27,7 +27,11 @@ fi
 case "$ACTION" in
   install)
     brew update
-    brew install "${packages[@]}"
+    for pkg in "${packages[@]}"; do
+      if ! brew install "$pkg"; then
+        echo "Skipping $pkg (install failed or conflicting)" >&2
+      fi
+    done
     cat <<'EOS'
 Reminder:
 - Add Homebrew's zsh to /etc/shells and run: chsh -s "$(command -v zsh)"

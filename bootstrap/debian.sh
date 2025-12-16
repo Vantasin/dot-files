@@ -16,7 +16,7 @@ packages=(
   fzf
 )
 
-optional_packages=(zoxide lsd tree tldr)
+optional_packages=(zoxide lsd tree tealdeer)
 
 case "$ACTION" in
   install)
