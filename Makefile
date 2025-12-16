@@ -72,7 +72,7 @@ backup:
 	if [[ -e "$$BACKUP_DIR" ]]; then echo "Backup directory already exists: $$BACKUP_DIR"; exit 1; fi; \
 	mkdir -p "$$BACKUP_DIR"; \
 	files=( \
-	  .zshrc .zshenv .zprofile .zlogin .zlogout \
+  .profile .zshrc .zshenv .zprofile .zlogin .zlogout \
 	  .gitconfig .tmux.conf .zsh_plugins.txt .nanorc \
 	  .config/btop .config/neofetch .config/ranger .config/bat \
 	  .config/nano .config/ncdu \
