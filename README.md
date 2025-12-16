@@ -7,8 +7,7 @@
 
 ## Quick Start (copy/paste)
 
-> **Note:** If you already have a real `~/.profile`, back it up or move it aside before stowing the `shell` package; Stow will not
-overwrite an existing file.
+> ⚠️ If you already have a real `~/.profile`, back it up before stowing the `shell` package (e.g., `mv ~/.profile ~/.profile.bak-$(date +%m%d%y)`); Stow will not overwrite an existing file.
 
 macOS:
 ```sh
