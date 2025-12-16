@@ -23,7 +23,7 @@ cd ~/dot-files && make install
 
 > What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow. It will refuse on conflicts rather than overwrite.
 
-> If you already have a real `~/.profile`, back it up or move it aside before stowing the `shell` package; Stow will not overwrite an existing file.
+> **Note:** If you already have a real `~/.profile`, back it up or move it aside before stowing the `shell` package; Stow will not overwrite an existing file.
 
 Reload Shell:
 ```sh
