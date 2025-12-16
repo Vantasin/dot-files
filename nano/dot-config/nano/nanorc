@@ -1,4 +1,3 @@
-include ~/.config/nano/*.nanorc
 include ~/.config/nano/syntax/*.nanorc
 # set linenumbers
 set autoindent
