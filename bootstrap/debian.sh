@@ -7,6 +7,7 @@ packages=(
   git
   zsh
   stow
+  nano
   tmux
   ranger
   fastfetch
