@@ -7,8 +7,8 @@ colors
 
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' formats '%F{yellow}(%b%u%f%F{red}%m%f)%f'
-zstyle ':vcs_info:git:*' actionformats '%F{yellow}(%b|%a%u%f%F{red}%m%f)%f'
+zstyle ':vcs_info:git:*' formats '%F{yellow}(%b)%f'
+zstyle ':vcs_info:git:*' actionformats '%F{yellow}(%b|%a)%f'
 
 _prompt_vcs_info() { vcs_info }
 add-zsh-hook precmd _prompt_vcs_info
