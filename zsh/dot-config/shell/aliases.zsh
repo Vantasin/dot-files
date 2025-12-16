@@ -5,7 +5,7 @@ alias ...='cd ../..'
 
 if command -v lsd >/dev/null 2>&1; then
   alias l='lsd -A'
-  alias ls='lsd'
+#  alias ls='lsd'
   alias ll='lsd -lh'
   alias la='lsd -lha'
   alias lt='lsd --tree'
