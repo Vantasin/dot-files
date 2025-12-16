@@ -1,4 +1,4 @@
-include ~/.config/nano/syntax/*.nanorc
+include "~/.config/nano/syntax/*.nanorc"
 set linenumbers
 set autoindent
 set tabsize 4
