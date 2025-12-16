@@ -5,30 +5,8 @@
 shell_dir="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
 [[ -f "${shell_dir}/exports.zsh" ]] && source "${shell_dir}/exports.zsh"
 
-# Force a shared, XDG-friendly history file for all sessions.
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history"
 mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
-[[ -n ${HISTFILE:-} ]] && { mkdir -p "${HISTFILE:h}"; touch "${HISTFILE}"; }
-export ZSH_AUTOSUGGEST_STRATEGY=(history)
-
-setopt autocd
-setopt extended_glob
-setopt interactivecomments
-setopt noclobber
-setopt nobeep
-setopt prompt_subst
-setopt append_history
-setopt inc_append_history
-setopt share_history
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_reduce_blanks
-setopt append_history
-setopt inc_append_history
-setopt share_history
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_reduce_blanks
+mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 
 autoload -Uz compinit
 _comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
@@ -37,7 +15,7 @@ zmodload -i zsh/complist
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*'
 
-for file in aliases functions keybinds prompt; do
+for file in history aliases functions keybinds prompt; do
   [[ -f "${shell_dir}/${file}.zsh" ]] && source "${shell_dir}/${file}.zsh"
 done
 unset file shell_dir _comp_dump
