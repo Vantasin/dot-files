@@ -15,11 +15,6 @@ setopt noclobber
 setopt nobeep
 setopt prompt_subst
 setopt share_history
-setopt append_history
-setopt inc_append_history
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_reduce_blanks
 
 autoload -Uz compinit
 _comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
