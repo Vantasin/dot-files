@@ -15,6 +15,7 @@ _prompt_vcs_info() {
   vcs_info
 }
 add-zsh-hook precmd _prompt_vcs_info
+add-zsh-hook chpwd _prompt_vcs_info
 # Seed once so the first prompt in a repo shows the branch.
 _prompt_vcs_info
 
