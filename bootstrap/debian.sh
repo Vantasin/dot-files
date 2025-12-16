@@ -21,20 +21,9 @@ optional_packages=(zoxide lsd tree tldr)
 case "$ACTION" in
   install)
     sudo apt-get update
-    available=()
-    missing=()
-    for pkg in "${packages[@]}"; do
-      if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
-        available+=("$pkg")
-      else
-        missing+=("$pkg")
-      fi
-    done
-    if ((${#available[@]})); then
-      sudo apt-get install -y "${available[@]}"
-    fi
-    if ((${#missing[@]})); then
-      printf 'Skipping unavailable packages: %s\n' "${missing[*]}"
+    # Always attempt core packages; log and continue on failure.
+    if ! sudo apt-get install -y "${packages[@]}"; then
+      echo "Some core packages failed to install; continuing."
     fi
     for pkg in "${optional_packages[@]}"; do
       if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
