@@ -4,7 +4,6 @@
 - For users who want explicit, reversible, XDG-friendly configs on macOS or Debian-based Linux.
 - Manages user-space configs only: zsh, git, tmux, ranger, fastfetch, btop, bat, ncdu, nano. No system services.
 - Stow handles placement; Antidote handles plugins; package managers (or bootstrap scripts) handle binaries.
-- Reference content in `reference/` is kept for posterity and not stowed.
 
 ## Quick Start (copy/paste)
 macOS:
