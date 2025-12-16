@@ -48,6 +48,7 @@ make stow      # or: stow --dotfiles --target="$HOME" zsh git tmux btop neofetch
 
 Verify:
 - `exec zsh`, ensure prompt/plugins load; `ls -l ~/.zshrc` points into `~/dot-files`.
+- Make zsh your login shell (optional): `chsh -s "$(command -v zsh)"` then restart the session.
 
 Rollback:
 ```sh
