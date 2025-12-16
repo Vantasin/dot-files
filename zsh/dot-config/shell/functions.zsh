@@ -13,4 +13,5 @@ fi
 autoload -Uz add-zsh-hook
 _sync_history() { fc -AI }
 add-zsh-hook precmd _sync_history
+add-zsh-hook chpwd _sync_history
 add-zsh-hook zshexit _sync_history
