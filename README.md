@@ -3,7 +3,7 @@
 ## Executive Summary
 - Minimal, auditable dotfiles using GNU Stow for symlinks and pure Zsh with Antidote for plugins.
 - For users who want explicit, reversible, XDG-friendly configs on macOS or Debian-based Linux.
-- Manages user-space configs only: zsh, git, tmux, ranger, neofetch, btop, bat, ncdu, nano. No system services.
+- Manages user-space configs only: zsh, git, tmux, ranger, fastfetch, btop, bat, ncdu, nano. No system services.
 - Stow handles placement; Antidote handles plugins; package managers (or bootstrap scripts) handle binaries.
 - Reference content in `reference/` is kept for posterity and not stowed.
 
@@ -38,12 +38,12 @@ git clone --depth=1 https://github.com/mattmc3/antidote ~/.antidote
 Dry-run (recommended):
 ```sh
 cd ~/dot-files
-make status    # or: stow -nv --dotfiles --target="$HOME" zsh git tmux btop neofetch ranger bat nano ncdu
+make status    # or: stow -nv --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu
 ```
 
 Apply:
 ```sh
-make stow      # or: stow --dotfiles --target="$HOME" zsh git tmux btop neofetch ranger bat nano ncdu
+make stow      # or: stow --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu
 ```
 
 Verify:
@@ -52,7 +52,7 @@ Verify:
 
 Rollback:
 ```sh
-make unstow    # or: stow -D --dotfiles --target="$HOME" zsh git tmux btop neofetch ranger bat nano ncdu
+make unstow    # or: stow -D --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu
 ```
 
 Back up / Restore (optional):
@@ -68,7 +68,7 @@ make restore BACKUP=~/.dotfiles_backup/<timestamp>
 - XDG: configs prefer `~/.config/<tool>/` for portability.
 
 ## Repository Layout
-- Packages: `zsh/`, `git/`, `tmux/`, `ranger/`, `neofetch/`, `btop/`, `bat/`, `ncdu/`, `nano/` (all use `dot-*` paths that stow to `$HOME`).  
+- Packages: `zsh/`, `git/`, `tmux/`, `ranger/`, `fastfetch/`, `btop/`, `bat/`, `ncdu/`, `nano/` (all use `dot-*` paths that stow to `$HOME`).  
 - Metadata: `packages.stow` (authoritative list), `Makefile` (stow/install/backup/restore), `bootstrap/` (optional installers).  
 - Reference only: `reference/oh-my-zsh/`, `reference/nano-syntax/`, `reference/nanorc`, `reference/config-legacy/` (not stowed).  
 

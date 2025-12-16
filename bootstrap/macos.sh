@@ -8,7 +8,6 @@ packages=(
   stow
   tmux
   ranger
-  neofetch
   btop
   bat
   ncdu

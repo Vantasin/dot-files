@@ -9,7 +9,7 @@ packages=(
   stow
   tmux
   ranger
-  neofetch
+  fastfetch
   btop
   bat
   ncdu
@@ -21,10 +21,14 @@ optional_packages=(zoxide lsd tree tldr)
 case "$ACTION" in
   install)
     sudo apt-get update
-    # Always attempt core packages; log and continue on failure.
-    if ! sudo apt-get install -y "${packages[@]}"; then
-      echo "Some core packages failed to install; continuing."
-    fi
+    # Install core packages individually so one missing package does not block the rest.
+    for pkg in "${packages[@]}"; do
+      if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
+        sudo apt-get install -y "$pkg" || echo "Skipping $pkg (install failed)"
+      else
+        echo "Skipping $pkg (not available in current apt sources)"
+      fi
+    done
     for pkg in "${optional_packages[@]}"; do
       if apt-cache policy "$pkg" 2>/dev/null | grep -qv 'Candidate: (none)'; then
         sudo apt-get install -y "$pkg" || echo "Skipping $pkg (install failed)"
