@@ -10,6 +10,19 @@
 ## Quick Start
 Prereqs: `zsh`, `git`, `stow` (optional tools listed in `bootstrap/macos.sh` / `bootstrap/debian.sh`).
 
+Get git/stow and clone, then run the installer:
+```sh
+# macOS
+brew install git stow rsync
+git clone https://github.com/Vantasin/dot-files.git ~/dot-files
+cd ~/dot-files && make install
+
+# Debian/Ubuntu
+sudo apt-get update && sudo apt-get install -y git stow rsync
+git clone https://github.com/Vantasin/dot-files.git ~/dot-files
+cd ~/dot-files && make install   # use sudo only if required for package installs
+```
+
 One-shot (full lifecycle, more intrusive):
 ```sh
 cd ~/dot-files
