@@ -3,4 +3,4 @@
 # --style=plain
 --wrap=auto
 --theme=default
---style=numbers,changes
+--style=full
