@@ -5,8 +5,7 @@
 shell_dir="${XDG_CONFIG_HOME:-$HOME/.config}/shell"
 [[ -f "${shell_dir}/exports.zsh" ]] && source "${shell_dir}/exports.zsh"
 
-mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
-mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
+mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh" "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"
 
 autoload -Uz compinit
 _comp_dump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/compdump"
@@ -33,17 +32,7 @@ else
   print -P "%F{yellow}# Antidote not found at ${ANTIDOTE_DIR}; skipping plugin load.%f" >&2
 fi
 
-# Re-assert history behavior after plugins load.
-setopt append_history inc_append_history share_history hist_ignore_dups hist_ignore_all_dups hist_reduce_blanks
-
 # Show quick system info once per interactive shell (skip with SKIP_SYSINFO=1).
-if [[ -z "${SKIP_SYSINFO:-}" ]]; then
-  case "$OSTYPE" in
-    darwin*) cmd=fastfetch ;;
-    linux*)  cmd=fastfetch ;;
-    *)       cmd= ;;
-  esac
-  if [[ -n "${cmd:-}" ]] && command -v "$cmd" >/dev/null 2>&1; then
-    "$cmd"
-  fi
+if [[ -z "${SKIP_SYSINFO:-}" ]] && command -v fastfetch >/dev/null 2>&1; then
+  fastfetch
 fi
