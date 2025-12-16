@@ -12,7 +12,9 @@ zstyle ':vcs_info:git:*' actionformats '%F{yellow}(%b|%a)%f'
 
 _prompt_vcs_info() {
   vcs_info_msg_0_=""
-  vcs_info
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    vcs_info
+  fi
 }
 add-zsh-hook precmd _prompt_vcs_info
 add-zsh-hook chpwd _prompt_vcs_info
