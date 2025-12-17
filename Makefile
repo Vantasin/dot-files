@@ -6,8 +6,9 @@ STOW := stow
 STOW_FLAGS := --dotfiles --target="$(HOME)"
 BACKUP_ROOT := $(HOME)/.dotfiles_backup
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
+LOG_FILE ?= $(HOME)/.dotfiles_install.log
 
-.PHONY: help check antidote stow unstow restow status macos debian install uninstall backup restore
+.PHONY: help check antidote stow unstow restow status force-install macos debian install uninstall backup restore
 
 help:
 	@printf "Targets:\n"
@@ -18,6 +19,7 @@ help:
 	@printf "  stow        Stow all packages listed in %s\n" "$(PACKAGES_FILE)"
 	@printf "  unstow      Unstow all packages listed in %s\n" "$(PACKAGES_FILE)"
 	@printf "  restow      Restow all packages listed in %s\n" "$(PACKAGES_FILE)"
+	@printf "  force-install Move conflicts to <path>.bak-%s then stow (logs to %s)\n" "$(TIMESTAMP)" "$(LOG_FILE)"
 	@printf "  backup      Backup existing dotfiles to $(BACKUP_ROOT)/<timestamp>\n"
 	@printf "  restore     Restore missing files from BACKUP=path (non-overwriting)\n"
 	@printf "  install     Bootstrap tools, backup, then stow dotfiles\n"
@@ -49,6 +51,42 @@ restow: check
 
 status: check
 	$(STOW) -nv $(STOW_FLAGS) $(PACKAGES)
+
+force-install: check
+	@set -euo pipefail; \
+	LOG_FILE="$(LOG_FILE)"; \
+	log(){ ts="$$(date +%Y-%m-%dT%H:%M:%S%z)"; msg="$$ts $$*"; echo "$$msg"; if [[ -n "$$LOG_FILE" ]]; then echo "$$msg" >>"$$LOG_FILE"; fi; }; \
+	log "Starting force-install (log: $$LOG_FILE)"; \
+	tmp="$$(mktemp)"; \
+	trap 'rm -f "$$tmp"' EXIT; \
+	log "Checking for conflicts with stow dry-run..."; \
+	if $(STOW) -nv $(STOW_FLAGS) $(PACKAGES) >"$$tmp" 2>&1; then \
+		log "No conflicts detected; applying stow."; \
+		$(STOW) $(STOW_FLAGS) $(PACKAGES); \
+		log "Force-install complete (no conflicts)."; \
+		exit 0; \
+	fi; \
+	conflicts="$$(awk '/existing target/ { \
+		if (match($$0, /existing target[^:]*: ([^ ]+)/, m)) { print m[1]; next } \
+		if (match($$0, /over existing target[[:space:]]+([^ ]+)/, m)) { print m[1]; } \
+	}' "$$tmp" | sort -u)"; \
+	if [[ -z "$$conflicts" ]]; then \
+		log "Stow reported conflicts but none could be parsed; output follows:"; \
+		cat "$$tmp"; \
+		exit 1; \
+	fi; \
+	printf "%s\n" "$$conflicts" | while IFS= read -r rel; do \
+		[[ -n "$$rel" ]] || continue; \
+		src="$(HOME)/$$rel"; \
+		dest="$$src.bak-$(TIMESTAMP)"; \
+		if [[ -e "$$src" || -L "$$src" ]]; then \
+			log "Moving $$src -> $$dest"; \
+			mv "$$src" "$$dest"; \
+		fi; \
+	done; \
+	log "Re-running stow now that conflicts are moved..."; \
+	$(STOW) $(STOW_FLAGS) $(PACKAGES); \
+	log "Force-install complete."
 
 macos:
 	@if [[ -x "bootstrap/macos.sh" ]]; then \
@@ -102,18 +140,25 @@ restore:
 	rsync -av --ignore-existing "$$BACKUP_PATH"/ "$$HOME"/
 
 install:
-	$(MAKE) check
-	-$(MAKE) status
-	$(MAKE) backup
-	@if [[ "$(OS)" == "Darwin" ]]; then \
+	@set -euo pipefail; \
+	LOG_FILE="$(LOG_FILE)"; \
+	log(){ ts="$$(date +%Y-%m-%dT%H:%M:%S%z)"; msg="$$ts $$*"; echo "$$msg"; if [[ -n "$$LOG_FILE" ]]; then echo "$$msg" >>"$$LOG_FILE"; fi; }; \
+	log "Starting install (log: $$LOG_FILE)"; \
+	log "Running check"; $(MAKE) check; \
+	log "Running status (dry-run stow)"; if $(MAKE) status; then log "Status completed without conflicts"; else log "Status reported conflicts (expected if existing files)"; fi; \
+	log "Backing up existing files"; $(MAKE) backup; \
+	if [[ "$(OS)" == "Darwin" ]]; then \
+	  log "Running macOS bootstrap install"; \
 	  $(MAKE) macos ACTION=install; \
 	elif [[ "$(OS)" == "Linux" ]]; then \
+	  log "Running Debian bootstrap install"; \
 	  $(MAKE) debian ACTION=install; \
 	else \
-	  echo "No bootstrap script for OS=$(OS)"; \
-	fi
-	$(MAKE) antidote
-	$(MAKE) stow
+	  log "No bootstrap script for OS=$(OS)"; \
+	fi; \
+	log "Ensuring Antidote is installed"; $(MAKE) antidote; \
+	log "Stowing packages"; $(MAKE) stow; \
+	log "Install complete"
 
 uninstall:
 	$(MAKE) unstow
