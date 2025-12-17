@@ -26,6 +26,12 @@ cd ~/dot-files && make install
 
 > What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow. It will refuse on conflicts rather than overwrite.
 
+Reload Shell:
+```sh
+exec zsh
+```
+> Verify: `ls -l ~/.zshrc` points into `~/dot-files`
+
 Force install (renames conflicts in-place):
 ```sh
 cd ~/dot-files
@@ -41,12 +47,6 @@ DRY_RUN=1 scripts/rollback-force-install.sh   # preview
 DRY_RUN=0 scripts/rollback-force-install.sh   # apply (default)
 ```
 > Uses `~/.dotfiles_install.log`; pick an older run with `RUN_INDEX=2` (3=third-latest, etc).
-
-Reload Shell:
-```sh
-exec zsh
-```
-> Verify: `ls -l ~/.zshrc` points into `~/dot-files`
 
 Rollback:
 ```sh
