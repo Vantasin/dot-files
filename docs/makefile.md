@@ -20,7 +20,7 @@
 - `make macos|debian ACTION=install|uninstall` — run OS package installs/removals only.
 
 ## Backup/Restore Scope
-- Backs up: `~/.profile`, zsh files (`.zsh*`), git, tmux, nano, btop, bat, ncdu, fastfetch configs under `~/.config`.
+- Backs up active Stow-managed targets such as `~/.zshenv`, `~/.zshrc`, `~/.zsh_plugins.txt`, `~/.tmux.conf`, `~/.gitconfig`, `~/.config/shell`, `~/.config/git`, and the managed `~/.config/*` tool directories.
 - Skips any symlink already pointing into this repo to avoid backing up the repo itself. Symlink target resolution is implemented in a macOS- and Linux-compatible way instead of relying on `readlink -f`.
 - Restore only copies files that do not already exist (`rsync --ignore-existing`); will not overwrite current files.
 

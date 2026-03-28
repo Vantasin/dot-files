@@ -1,4 +1,5 @@
-# ~/.profile (POSIX sh). Environment only; no output or shell execs.
+# ~/.profile example for machines where you want local login-shell environment.
+# This repo does not install ~/.profile by default.
 
 path_prepend() { case ":$PATH:" in *":$1:"*) ;; *) PATH="$1:$PATH";; esac; }
 

@@ -1,0 +1,4 @@
+# ~/.bashrc example for machines where you keep bash as a local shell.
+# This repo does not install ~/.bashrc by default.
+
+# Put bash-specific interactive settings here.

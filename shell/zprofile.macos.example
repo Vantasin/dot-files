@@ -1,0 +1,6 @@
+# ~/.zprofile example for macOS machines where you want local Homebrew
+# login-shell setup. This repo does not install ~/.zprofile by default.
+
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+fi

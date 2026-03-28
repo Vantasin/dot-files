@@ -1,6 +1,6 @@
 # Bootstrap Scripts
 
-This directory contains optional OS package installation and uninstall scripts. It does not manage dotfiles directly.
+This directory contains optional OS package installation and uninstall scripts. It does not manage dotfiles directly or mutate local login-shell files such as `~/.profile` or `~/.zprofile`.
 
 ## Files
 - `macos.sh`

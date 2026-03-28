@@ -7,8 +7,6 @@
 
 ## Quick Start (copy/paste)
 
-> ⚠️ If you already have a real `~/.profile`, back it up before stowing the `shell` package (e.g., `mv ~/.profile ~/.profile.bak-$(date +%m%d%y)`); Stow will not overwrite an existing file.
-
 macOS:
 ```sh
 brew install git stow rsync
@@ -26,23 +24,8 @@ cd ~/dot-files && make install
 
 > What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow.
 > If the dry-run reports conflicts, install stops immediately before backup/bootstrap and refuses to overwrite anything.
-
-> The repo does not switch from bash into zsh via `.profile` or `.bashrc`.
-> If you want zsh as your actual login shell, use the explicit shell-change step below after install.
-
-Make zsh your login shell (optional but recommended):
-
-macOS:
-```sh
-grep -qxF "$(command -v zsh)" /etc/shells || echo "$(command -v zsh)" | sudo tee -a /etc/shells
-chsh -s "$(command -v zsh)"
-```
-
-Debian/Ubuntu:
-```sh
-chsh -s "$(command -v zsh)"
-```
-> Log out and back in for the login-shell change to take effect everywhere.
+> The repo does not install `~/.profile` or `~/.zprofile` by default.
+> Keep login-shell files local to each machine; see [shell/README.md](shell/README.md) for optional examples.
 
 If `make install` reports conflicts you want renamed aside automatically, run:
 ```sh
@@ -52,10 +35,10 @@ make force-install
 
 Start zsh now:
 ```sh
-exec zsh
+zsh
 ```
 > Verify: `ls -l ~/.zshrc` points into `~/dot-files`
-> To make zsh your default login shell long-term, use `chsh` instead of relying on `.profile`.
+> Local login-shell setup such as Homebrew `brew shellenv` belongs in a machine-local profile file, not in the active Stow package set.
 
 ## Common Tasks
 
@@ -86,7 +69,7 @@ make unstow
 - Stow, install, backup, and restore behavior: [docs/makefile.md](docs/makefile.md)
 - Package index and per-package links: [docs/packages.md](docs/packages.md)
 - Git config and repo-local hooks: [docs/git.md](docs/git.md), [.githooks/README.md](.githooks/README.md)
-- Zsh and shell behavior: [docs/zsh.md](docs/zsh.md), [docs/shell.md](docs/shell.md)
+- Zsh and local shell notes: [docs/zsh.md](docs/zsh.md), [docs/shell.md](docs/shell.md)
 - Bootstrap scripts: [docs/bootstrap.md](docs/bootstrap.md)
 - Agent and maintenance guidance: [AGENTS.md](AGENTS.md), [docs/agents/README.md](docs/agents/README.md)
 - Human-readable audit trail: [docs/changelog/README.md](docs/changelog/README.md)

@@ -32,7 +32,6 @@ case "$ACTION" in
     cat <<'EOS'
 Reminder:
 - Debian/Ubuntu package 'bat' installs the 'batcat' binary; aliases handle this.
-- To make zsh your login shell: chsh -s "$(command -v zsh)"
 EOS
     ;;
   uninstall)

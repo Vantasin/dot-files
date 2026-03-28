@@ -16,5 +16,5 @@
 - Enable it with:
   `git config core.hooksPath .githooks`
 - The included `pre-commit` hook is intentionally lightweight:
-  rejects staged `.DS_Store`, runs `bash -n` on changed shell entry files and scripts, runs optional `shellcheck` on changed `*.sh` files if available, and runs `make status` against a temporary `HOME` when staged changes affect Stow-relevant files.
+  rejects staged `.DS_Store`, runs `bash -n` on changed shell scripts and local shell example files, runs optional `shellcheck` on changed `*.sh` files if available, and runs `make status` against a temporary `HOME` when staged changes affect Stow-relevant files.
 - Hooks should stay fast, deterministic, and local-only.

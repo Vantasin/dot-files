@@ -8,6 +8,7 @@
 - Detailed operational and package-specific behavior belongs in `docs/*.md`.
 - `docs/packages.md` is the package index and should stay aligned with `packages.stow` and the package directory READMEs.
 - `bootstrap/` is for OS package installation helpers, not for stowed dotfile content.
+- `shell/` is for optional local login-shell examples and is not part of the active Stow package set.
 - `scripts/` is for maintenance helpers tied to documented workflows.
 - `reference/` is archival or upstream material and should not drive active behavior changes.
 
@@ -47,10 +48,10 @@
 - If bootstrap package sets or behavior change, update `docs/bootstrap.md`.
 
 ## Profile Rules
-- `shell/dot-profile` must remain POSIX-safe, quiet, and environment-focused.
+- The active install should not require owning `~/.profile` or `~/.zprofile`.
+- Files under `shell/` are optional local examples only and should stay clearly non-active.
 - Do not use `.profile` or `.bashrc` to `exec` zsh or any other shell.
-- Shared login environment belongs in `~/.profile`; zsh login shells should inherit it via `~/.zprofile`.
-- Profile changes should be reviewed for login-shell side effects on macOS, Debian, and Ubuntu.
+- Review login-shell side effects on macOS, Debian, and Ubuntu when changing local shell examples or nearby docs.
 
 ## Package List Rules
 - `packages.stow` is the authoritative list of active Stow packages.

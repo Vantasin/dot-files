@@ -5,8 +5,9 @@
 ## Start Here
 - This repo is a GNU Stow-managed dotfiles repo for user-space config only.
 - This repo targets macOS, Debian, and Ubuntu systems.
-- Root packages are listed in `packages.stow`: `zsh`, `tmux`, `git`, `ranger`, `fastfetch`, `btop`, `bat`, `ncdu`, `nano`, `shell`.
+- Root packages are listed in `packages.stow`: `zsh`, `tmux`, `git`, `ranger`, `fastfetch`, `btop`, `bat`, `ncdu`, `nano`.
 - `packages.stow` is the single source of truth for what is stowed.
+- `shell/` holds optional local login-shell examples and is not part of the active Stow package set.
 - `reference/` contains legacy or upstream copies and is not part of the active install flow.
 - `bootstrap/` contains optional OS package installers (`macos.sh`, `debian.sh`).
 
@@ -26,7 +27,7 @@
 - Docs index: [docs/README.md](docs/README.md)
 - Make targets and behavior: [docs/makefile.md](docs/makefile.md)
 - Package map: [docs/packages.md](docs/packages.md)
-- Zsh details: [docs/zsh.md](docs/zsh.md) and [docs/shell.md](docs/shell.md)
+- Zsh details and local shell notes: [docs/zsh.md](docs/zsh.md) and [docs/shell.md](docs/shell.md)
 - Bootstrap package scripts: [docs/bootstrap.md](docs/bootstrap.md)
 - Human-readable audit trail: [docs/changelog/README.md](docs/changelog/README.md)
 

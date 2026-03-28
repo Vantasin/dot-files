@@ -27,13 +27,13 @@ for path in "${staged_files[@]}"; do
   esac
 
   case "$path" in
-    Makefile|packages.stow|bat/*|bootstrap/*|btop/*|fastfetch/*|git/*|nano/*|ncdu/*|ranger/*|shell/*|tmux/*|zsh/*)
+    Makefile|packages.stow|bat/*|bootstrap/*|btop/*|fastfetch/*|git/*|nano/*|ncdu/*|ranger/*|tmux/*|zsh/*)
       needs_stow_check=1
       ;;
   esac
 
   case "$path" in
-    bootstrap/*.sh|scripts/*.sh|shell/dot-profile|shell/dot-profile.example|shell/dot-bashrc.example)
+    bootstrap/*.sh|scripts/*.sh|shell/*.example)
       bash_n_files+=("$path")
       ;;
   esac

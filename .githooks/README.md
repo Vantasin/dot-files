@@ -12,7 +12,7 @@ git config core.hooksPath .githooks
 
 ## What `pre-commit` Checks
 - rejects staged `.DS_Store`
-- runs `bash -n` on changed shell scripts and shell entry files
+- runs `bash -n` on changed shell scripts and local shell example files
 - runs `shellcheck` on changed `*.sh` files if `shellcheck` is installed
 - runs `make status` against a temporary `HOME` when staged changes affect Stow-relevant files
 

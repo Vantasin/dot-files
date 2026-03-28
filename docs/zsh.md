@@ -2,13 +2,13 @@
 
 ## Layout & Flow
 - `zsh/dot-zshenv` — minimal env; sets XDG paths; fast, non-interactive-safe; delegates interactivity to `.zshrc`.
-- `zsh/dot-zprofile` — sources `~/.profile` so zsh login shells inherit the shared POSIX login environment.
 - `zsh/dot-zshrc` — interactive: sources exports, creates cache (`~/.cache/zsh`) and state (`~/.local/state/zsh`) dirs, runs `compinit` with cached compdump, loads modules, then Antidote plugins, then optional fastfetch.
 - `zsh/dot-config/shell/*.zsh` — loaded in order: `history` → `aliases` → `functions` → `keybinds` → `prompt`. History runs before plugins so autosuggestions see shared history.
 
-## Login Shell Choice
-- This repo does not switch from bash into zsh via `.profile` or `.bashrc`.
-- If you want zsh as the real login shell, use `chsh -s "$(command -v zsh)"` and let zsh start normally.
+## Scope
+- This repo configures zsh after zsh starts.
+- It does not install `~/.profile` or `~/.zprofile` by default.
+- If you keep machine-local login-shell files, keep them separate from the active Stow package set. See [shell.md](shell.md).
 
 ## Plugins (Antidote)
 - Installed at `~/.antidote`; plugin list in `~/.zsh_plugins.txt`.

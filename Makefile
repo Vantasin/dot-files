@@ -120,10 +120,9 @@ backup:
 	if [[ -e "$$BACKUP_DIR" ]]; then echo "Backup directory already exists: $$BACKUP_DIR"; exit 1; fi; \
 	mkdir -p "$$BACKUP_DIR"; \
 	files=( \
-  .profile .zshrc .zshenv .zprofile .zlogin .zlogout \
-	  .gitconfig .tmux.conf .zsh_plugins.txt .nanorc \
-  .config/btop .config/fastfetch .config/ranger .config/bat \
-  .config/nano .config/ncdu \
+	  .zshrc .zshenv .zsh_plugins.txt .tmux.conf .gitconfig \
+	  .config/shell .config/git .config/ranger .config/fastfetch \
+	  .config/btop .config/bat .config/nano .config/ncdu \
 	); \
 	repo_root="$$(pwd)"; \
 	cd "$$HOME"; \

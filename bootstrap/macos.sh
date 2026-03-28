@@ -35,7 +35,6 @@ case "$ACTION" in
     done
     cat <<'EOS'
 Reminder:
-- Add Homebrew's zsh to /etc/shells and run: chsh -s "$(command -v zsh)"
 - fzf key-bindings/completion: "$(brew --prefix)"/opt/fzf/install --key-bindings --completion --no-update-rc
 EOS
     ;;

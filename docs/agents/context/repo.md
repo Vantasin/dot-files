@@ -14,7 +14,6 @@
 - `bat/` — bat config.
 - `ncdu/` — ncdu config.
 - `nano/` — nano config and syntax includes.
-- `shell/` — `.profile` and example shell entry files.
 
 ## Source Of Truth
 - `packages.stow` defines what packages are installed or removed by Stow.
@@ -25,11 +24,12 @@
 - `bootstrap/` — optional package install and uninstall scripts for supported operating systems.
 - `docs/` — user and maintainer documentation for packages and workflows.
 - `docs/agents/` — agent-oriented context, rules, and workflows.
+- `shell/` — optional local login-shell examples that are not part of the active Stow package set.
 - `reference/` — legacy or upstream material that should not be treated as active config.
 
 ## Useful References
 - Install and stow behavior: [docs/makefile.md](../../makefile.md)
 - Package map: [docs/packages.md](../../packages.md)
 - Zsh flow: [docs/zsh.md](../../zsh.md)
-- Shell shim details: [docs/shell.md](../../shell.md)
+- Local shell examples: [docs/shell.md](../../shell.md)
 - Bootstrap scripts: [docs/bootstrap.md](../../bootstrap.md)

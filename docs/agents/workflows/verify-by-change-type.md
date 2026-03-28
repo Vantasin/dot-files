@@ -15,6 +15,7 @@ Use this as a quick selector for the smallest verification set that matches the 
 ## Shell Profile Or Zsh Startup Changes
 - Run `bash -n` on POSIX shell files and `shellcheck` if available.
 - Open a new shell and confirm startup is clean and fast.
+- If the change touches `shell/`, confirm it remains example-only and is still not part of the active Stow package set.
 - Review login-shell behavior on macOS, Debian, and Ubuntu assumptions before merging.
 
 ## Bootstrap Changes

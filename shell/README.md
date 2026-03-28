@@ -1,23 +1,18 @@
-# shell Package
+# Local Shell Examples
 
-This package stows the login-shell shim and example shell entry files.
+This directory holds optional local login-shell examples. It is not part of the active Stow package set.
 
-## Main Content
-- `dot-profile` -> `~/.profile`
-- `dot-profile.example`
-- `dot-bashrc.example`
+## Files
+- `profile.example`
+- `bashrc.example`
+- `zprofile.macos.example`
 
 ## Notes
-- `dot-profile` is POSIX-safe login environment setup only. It does not switch shells.
-- If you want zsh as your default shell on macOS, Debian, or Ubuntu, change it explicitly with `chsh` instead of `exec zsh` from `.profile` or `.bashrc`.
-- `dot-profile.example` and `dot-bashrc.example` are reference examples only; they should not trampoline into zsh.
-- If a real `~/.profile` already exists, move it aside first or use `make force-install`.
-
-## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" shell`
+- The repo does not install `~/.profile`, `~/.bashrc`, or `~/.zprofile` by default.
+- Use these files as references for machine-local login-shell setup only.
+- Do not use `.profile` or `.bashrc` to `exec` zsh or any other shell.
+- `zprofile.macos.example` is the local place for macOS-specific Homebrew login-shell setup when needed.
 
 ## Related Docs
 - [../docs/shell.md](../docs/shell.md)
 - [../docs/packages.md](../docs/packages.md)
-- [../docs/makefile.md](../docs/makefile.md)

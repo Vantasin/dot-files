@@ -1,7 +1,7 @@
 # Package Index
 
 ## Stow Packages
-- [../zsh/README.md](../zsh/README.md) — shell config and shared shell modules. Details: [zsh.md](zsh.md), [shell.md](shell.md)
+- [../zsh/README.md](../zsh/README.md) — interactive zsh config and shared shell modules. Details: [zsh.md](zsh.md)
 - [../git/README.md](../git/README.md) — global Git config. Details: [git.md](git.md)
 - [../tmux/README.md](../tmux/README.md) — tmux config. Details: [tmux.md](tmux.md)
 - [../ranger/README.md](../ranger/README.md) — ranger config. Details: [ranger.md](ranger.md)
@@ -10,10 +10,10 @@
 - [../bat/README.md](../bat/README.md) — bat config. Details: [bat.md](bat.md)
 - [../ncdu/README.md](../ncdu/README.md) — ncdu config. Details: [ncdu.md](ncdu.md)
 - [../nano/README.md](../nano/README.md) — nano config and syntax files. Details: [nano.md](nano.md)
-- [../shell/README.md](../shell/README.md) — login shell shim and example shell entry files. Details: [shell.md](shell.md)
 
 ## Support Directories
 - [../bootstrap/README.md](../bootstrap/README.md) — optional package installation scripts. Details: [bootstrap.md](bootstrap.md)
+- [../shell/README.md](../shell/README.md) — optional local login-shell examples. Details: [shell.md](shell.md)
 - [../scripts/README.md](../scripts/README.md) — maintenance scripts tied to install and rollback workflows. Related: [makefile.md](makefile.md)
 
 ## Usage

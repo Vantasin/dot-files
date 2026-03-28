@@ -11,7 +11,7 @@
 - Called via Makefile: `make macos ACTION=install|uninstall` or `make debian ACTION=install|uninstall`.
 - Install action attempts core packages individually; logs and continues on failures or missing packages. Optional packages are attempted if available.
 - Uninstall action removes the same package sets; does not touch backups or `~/.antidote`.
-- The bootstrap scripts install `zsh` but do not change the user's login shell. Use `chsh -s "$(command -v zsh)"` explicitly if you want zsh as the default shell.
+- The bootstrap scripts install `zsh` and related tools but do not change the user's login shell or mutate local profile files such as `~/.profile` or `~/.zprofile`.
 
 ## Safety
 - `set -euo pipefail`; uses sudo explicitly where needed.

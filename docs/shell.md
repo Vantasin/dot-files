@@ -1,18 +1,20 @@
-# Shell Profile Notes
+# Local Shell Profile Notes
 
 ## Location
-- Stowed from `shell/dot-profile` to `~/.profile`.
+- Optional local shell examples live under `shell/`.
+- `shell/` is not part of the active Stow package set in `packages.stow`.
 
-## Content
-- POSIX-safe login environment setup only.
-- Adds common user bin paths and, for interactive bash login shells, sources `~/.bashrc`.
-- Does not `exec zsh` or switch shells.
+## Files
+- `shell/profile.example` — optional local `~/.profile` example for shared login-shell environment.
+- `shell/bashrc.example` — optional local `~/.bashrc` example for bash-specific interactive settings.
+- `shell/zprofile.macos.example` — optional local `~/.zprofile` example for macOS Homebrew login-shell setup.
 
-## Shell Selection Policy
-- Choose zsh as the default shell explicitly with `chsh -s "$(command -v zsh)"` if you want it as your real login shell.
-- Do not use `.profile` or `.bashrc` to trampoline from bash into zsh. That can interfere with Debian and Ubuntu login-shell expectations and is harder to reason about.
-- Shared login environment stays in `~/.profile`; zsh login shells pick that up via `~/.zprofile`.
+## Scope
+- This repo focuses on portable interactive zsh config and CLI tool config.
+- The active install does not create or replace `~/.profile`, `~/.bashrc`, or `~/.zprofile`.
+- Use the examples only when you intentionally want machine-local login-shell setup.
 
-## Usage
-- Apply via Stow: `stow --dotfiles --target="$HOME" shell`.
-- If you have an existing `~/.profile`, back it up or move it aside before stowing (e.g., `mv ~/.profile ~/.profile.bak-$(date +%m%d%y)`); Stow will refuse to overwrite a real file. `stow --adopt` is more intrusive—use only if you intend to absorb the file into the repo.
+## Rules Of Thumb
+- Do not use `.profile` or `.bashrc` to trampoline from bash into zsh.
+- Keep local login-shell setup minimal, quiet, and machine-specific.
+- On macOS, keep local Homebrew login-shell setup in a local `~/.zprofile` if you need it.
