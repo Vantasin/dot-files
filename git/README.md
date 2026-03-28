@@ -6,6 +6,7 @@ This package stows global Git config into `~/.gitconfig` and `~/.config/git/`.
 - `dot-gitconfig`
 - `dot-config/git/`
   Contains the global excludes file used by `core.excludesFile`.
+  `dot-gitconfig` also includes `~/.gitconfig.local` for machine-local identity settings.
 
 ## Apply
 - `make stow`

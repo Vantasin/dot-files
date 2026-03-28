@@ -8,11 +8,18 @@
 - Uses user-space paths; does not touch system git config.
 - Sets `core.excludesFile` to `~/.config/git/ignore` for global ignore patterns managed by this repo.
 - The managed global ignore file is the right place for editor/workspace metadata such as `.obsidian/`.
+- Includes `~/.gitconfig.local` if present so personal `user.name` and `user.email` can stay machine-local and out of the repo.
 
 ## Usage
 - Apply via Stow: `stow --dotfiles --target="$HOME" git`.
 - Edit `git/dot-gitconfig` to change settings; restow to apply.
 - Edit `git/dot-config/git/ignore` to change global ignore patterns; restow to apply.
+- Put personal identity in `~/.gitconfig.local`, for example:
+  ```ini
+  [user]
+    name = Vantasin
+    email = 76798329+Vantasin@users.noreply.github.com
+  ```
 
 ## Repo-Local Hooks
 - This repo can use a local hooks directory at `.githooks/`.

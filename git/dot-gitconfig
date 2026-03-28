@@ -1,4 +1,7 @@
-# Global Git configuration (user.name/user.email intentionally unset).
+# Global Git configuration. Personal identity is loaded from ~/.gitconfig.local if present.
+
+[include]
+	path = ~/.gitconfig.local
 
 [init]
 	defaultBranch = main
