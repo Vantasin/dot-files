@@ -22,8 +22,9 @@
 ## Consistency Checks
 - Active packages should exist in `packages.stow`, have matching directories, and be described consistently in docs.
 - Top-level directories should still match the structure rules in `docs/agents/rules/repo.md`.
-- `Makefile`, `scripts/`, `bootstrap/`, `shell/`, and `packages.stow` should still satisfy the dedicated rules in `docs/agents/rules/repo.md`.
+- `Makefile`, `scripts/`, `bootstrap/`, `Brewfile`, `shell/`, and `packages.stow` should still satisfy the dedicated rules in `docs/agents/rules/repo.md`.
 - `Makefile` behavior, `README.md`, and `docs/makefile.md` should agree on install, backup, restore, and force-install semantics.
+- `Brewfile`, `bootstrap/macos.sh`, `docs/bootstrap.md`, and the macOS quick start in `README.md` should agree on the macOS package source of truth.
 - Source-of-truth and drift-resolution rules should still hold: no known mismatch should be left split across code and docs.
 - Agent docs should point to real files and reflect the current repo structure.
 

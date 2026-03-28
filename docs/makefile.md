@@ -17,7 +17,7 @@
 - `make backup` — rsyncs existing files in scope to `~/.dotfiles_backup/<timestamp>`, skipping symlinks into the repo.
 - `make restore BACKUP=…` — rsyncs missing files back without overwriting anything that exists.
 - `make antidote` — installs Antidote to `~/.antidote` if missing.
-- `make macos|debian ACTION=install|uninstall` — run OS package installs/removals only.
+- `make macos|debian ACTION=install|uninstall` — run OS package installs/removals only. On macOS, `make macos ACTION=install` applies the repo root `Brewfile`.
 
 ## Backup/Restore Scope
 - Backs up active Stow-managed targets such as `~/.zshenv`, `~/.zshrc`, `~/.zsh_plugins.txt`, `~/.tmux.conf`, `~/.gitconfig`, `~/.config/shell`, `~/.config/git`, and the managed `~/.config/*` tool directories.

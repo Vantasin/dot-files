@@ -21,6 +21,7 @@ Use this as a quick selector for the smallest verification set that matches the 
 ## Bootstrap Changes
 - Run `bash -n` on the bootstrap scripts and `shellcheck` if available.
 - Review package handling separately for macOS and Debian/Ubuntu.
+- On macOS, confirm `Brewfile` and `bootstrap/macos.sh` stay aligned, and run `brew bundle check --file=Brewfile` when practical.
 - Confirm docs still match in `docs/bootstrap.md` and the root `README.md` if onboarding changed.
 
 ## Script Changes

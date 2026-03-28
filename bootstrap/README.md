@@ -5,6 +5,7 @@ This directory contains optional OS package installation and uninstall scripts. 
 ## Files
 - `macos.sh`
 - `debian.sh`
+- [../Brewfile](../Brewfile) — the macOS Homebrew package manifest used by `macos.sh`
 
 ## Usage
 - `make macos ACTION=install`

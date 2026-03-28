@@ -1,22 +1,25 @@
 # Bootstrap Scripts Notes
 
 ## Location
-- `bootstrap/macos.sh` and `bootstrap/debian.sh`.
+- `bootstrap/macos.sh`, `bootstrap/debian.sh`, and the repo root `Brewfile`.
 
 ## Purpose
-- Install/remove user-space binaries only (zsh, stow, tmux, ranger, fastfetch, etc.).
+- Install/remove user-space packages only; on macOS, the Brewfile may also include GUI apps via casks.
 - No dotfile management; that is handled by Stow/Makefile.
 
 ## Usage
 - Called via Makefile: `make macos ACTION=install|uninstall` or `make debian ACTION=install|uninstall`.
-- Install action attempts core packages individually; logs and continues on failures or missing packages. Optional packages are attempted if available.
-- Uninstall action removes the same package sets; does not touch backups or `~/.antidote`.
+- macOS install applies the repo root `Brewfile` with `brew bundle --file=Brewfile`.
+- macOS uninstall removes Brewfile-declared formulae, casks, and taps; it does not use `brew bundle cleanup`, which would target undeclared packages instead.
+- Debian install attempts core packages individually; optional packages are attempted if available.
+- Debian uninstall removes the same apt package sets; neither uninstall path touches backups or `~/.antidote`.
 - The bootstrap scripts install `zsh` and related tools but do not change the user's login shell or mutate local profile files such as `~/.profile` or `~/.zprofile`.
 
 ## Safety
 - `set -euo pipefail`; uses sudo explicitly where needed.
-- Skips packages not available in current apt/brew sources; leaves state untouched on failure.
+- Brewfile-driven macOS installs keep package declarations in one place instead of duplicating them in shell scripts.
+- Debian install skips packages not available in current apt sources; leaves state untouched on failure.
 
-## Package Sets (summary)
-- macOS (brew): git, zsh, stow, tmux, ranger, btop, bat, ncdu, fzf, zoxide, lsd, tree, tldr, fastfetch.
-- Debian (apt): git, zsh, stow, tmux, ranger, fastfetch, btop, bat, ncdu, fzf; optional: zoxide, lsd, tree, tldr.
+## Package Sources
+- macOS (Homebrew): declared in the repo root [../Brewfile](../Brewfile).
+- Debian/Ubuntu (apt): declared in `bootstrap/debian.sh`, with a separate optional package list.

@@ -9,21 +9,28 @@
 
 macOS:
 ```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 brew install git stow rsync
-git clone https://github.com/Vantasin/dot-files.git ~/dot-files
+git clone https://github.com/Vantasin/dot-files.git ~/Git/dot-files
 cd ~/dot-files && make install
 ```
 
 Debian/Ubuntu:
 ```sh
 sudo apt-get update && sudo apt-get install -y git stow rsync
-git clone https://github.com/Vantasin/dot-files.git ~/dot-files
+git clone https://github.com/Vantasin/dot-files.git ~/git/dot-files
 cd ~/dot-files && make install
 ```
 > Use sudo only if required for package installs
 
 > What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow.
 > If the dry-run reports conflicts, install stops immediately before backup/bootstrap and refuses to overwrite anything.
+> On macOS, the bootstrap package set comes from the repo root [Brewfile](Brewfile) via `brew bundle`.
 > The repo does not install `~/.profile` or `~/.zprofile` by default.
 > Keep login-shell files local to each machine; see [shell/README.md](shell/README.md) for optional examples.
 
@@ -67,10 +74,10 @@ make unstow
 
 - Docs hub: [docs/README.md](docs/README.md)
 - Stow, install, backup, and restore behavior: [docs/makefile.md](docs/makefile.md)
+- macOS package manifest and bootstrap notes: [Brewfile](Brewfile), [docs/bootstrap.md](docs/bootstrap.md)
 - Package index and per-package links: [docs/packages.md](docs/packages.md)
 - Git config and repo-local hooks: [docs/git.md](docs/git.md), [.githooks/README.md](.githooks/README.md)
 - Zsh and local shell notes: [docs/zsh.md](docs/zsh.md), [docs/shell.md](docs/shell.md)
-- Bootstrap scripts: [docs/bootstrap.md](docs/bootstrap.md)
 - Agent and maintenance guidance: [AGENTS.md](AGENTS.md), [docs/agents/README.md](docs/agents/README.md)
 - Human-readable audit trail: [docs/changelog/README.md](docs/changelog/README.md)
 
