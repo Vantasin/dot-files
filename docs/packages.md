@@ -1,22 +1,29 @@
-# Package Notes
+# Package Index
 
-## Stow Packages (from `packages.stow`)
-- `zsh/` — shell config (.zshenv, .zshrc, `~/.config/shell/*`, Antidote).
-- `git/` — global Git config.
-- `tmux/` — tmux settings.
-- `ranger/` — ranger rc/rifle config.
-- `fastfetch/` — system info config.
-- `btop/` — btop config.
-- `bat/` — bat (batcat) config.
-- `ncdu/` — ncdu config.
-- `nano/` — nano config/syntax includes.
-- `shell/` — `.profile` shim to exec zsh if present.
+## Stow Packages
+- [../zsh/README.md](../zsh/README.md) — shell config and shared shell modules. Details: [zsh.md](zsh.md), [shell.md](shell.md)
+- [../git/README.md](../git/README.md) — global Git config. Details: [git.md](git.md)
+- [../tmux/README.md](../tmux/README.md) — tmux config. Details: [tmux.md](tmux.md)
+- [../ranger/README.md](../ranger/README.md) — ranger config. Details: [ranger.md](ranger.md)
+- [../fastfetch/README.md](../fastfetch/README.md) — fastfetch config. Details: [fastfetch.md](fastfetch.md)
+- [../btop/README.md](../btop/README.md) — btop config. Details: [btop.md](btop.md)
+- [../bat/README.md](../bat/README.md) — bat config. Details: [bat.md](bat.md)
+- [../ncdu/README.md](../ncdu/README.md) — ncdu config. Details: [ncdu.md](ncdu.md)
+- [../nano/README.md](../nano/README.md) — nano config and syntax files. Details: [nano.md](nano.md)
+- [../shell/README.md](../shell/README.md) — login shell shim and example shell entry files. Details: [shell.md](shell.md)
+
+## Support Directories
+- [../bootstrap/README.md](../bootstrap/README.md) — optional package installation scripts. Details: [bootstrap.md](bootstrap.md)
+- [../scripts/README.md](../scripts/README.md) — maintenance scripts tied to install and rollback workflows. Related: [makefile.md](makefile.md)
 
 ## Usage
-- Apply all: `stow --dotfiles --target="$HOME" $(cat packages.stow)`.
-- Remove all: `stow -D --dotfiles --target="$HOME" $(cat packages.stow)`.
+- Apply all packages: `make stow`
+- Preview links and conflicts: `make status`
+- Remove all packages: `make unstow`
+- Rename conflicts aside automatically: `make force-install`
 
 ## Notes
-- repo paths use `dot-*` names; Stow creates dotfiles in `$HOME`.
-- Conflicts: Stow will refuse to overwrite; move/backup existing files before stowing or use `stow --adopt` with care.
-
+- Repo paths use `dot-*` names; Stow creates dotfiles in `$HOME`.
+- Package `README.md` files are documentation only and are ignored by the Stow commands in `Makefile`.
+- Internal docs should use relative Markdown links so packages, docs, and READMEs stay connected.
+- Conflicts: Stow will refuse to overwrite; move or back up existing files before stowing, or use `make force-install`.

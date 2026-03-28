@@ -3,7 +3,7 @@ OS := $(shell uname -s)
 PACKAGES_FILE := packages.stow
 PACKAGES := $(shell awk 'NF && $$1 !~ /^\043/' "$(PACKAGES_FILE)" 2>/dev/null)
 STOW := stow
-STOW_FLAGS := --dotfiles --target="$(HOME)"
+STOW_FLAGS := --dotfiles --ignore='(\.DS_Store|README\.md)$$' --target="$(HOME)"
 BACKUP_ROOT := $(HOME)/.dotfiles_backup
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 LOG_FILE ?= $(HOME)/.dotfiles_install.log
@@ -67,8 +67,18 @@ force-install: check
 		exit 0; \
 	fi; \
 	conflicts="$$(awk '/existing target/ { \
-		if (match($$0, /existing target[^:]*: ([^ ]+)/, m)) { print m[1]; next } \
-		if (match($$0, /over existing target[[:space:]]+([^ ]+)/, m)) { print m[1]; } \
+		line = $$0; \
+		if (line ~ /over existing target[[:space:]]+/) { \
+			sub(/^.*over existing target[[:space:]]+/, "", line); \
+			sub(/[[:space:]].*$$/, "", line); \
+			print line; \
+			next; \
+		} \
+		if (line ~ /existing target[^:]*: /) { \
+			sub(/^.*existing target[^:]*: /, "", line); \
+			sub(/[[:space:]].*$$/, "", line); \
+			print line; \
+		} \
 	}' "$$tmp" | sort -u)"; \
 	if [[ -z "$$conflicts" ]]; then \
 		log "Stow reported conflicts but none could be parsed; output follows:"; \
@@ -145,7 +155,13 @@ install:
 	log(){ ts="$$(date +%Y-%m-%dT%H:%M:%S%z)"; msg="$$ts $$*"; echo "$$msg"; if [[ -n "$$LOG_FILE" ]]; then echo "$$msg" >>"$$LOG_FILE"; fi; }; \
 	log "Starting install (log: $$LOG_FILE)"; \
 	log "Running check"; $(MAKE) check; \
-	log "Running status (dry-run stow)"; if $(MAKE) status; then log "Status completed without conflicts"; else log "Status reported conflicts (expected if existing files)"; fi; \
+	log "Running status (dry-run stow)"; \
+	if $(MAKE) status; then \
+		log "Status completed without conflicts"; \
+	else \
+		log "Install aborted: stow dry-run reported conflicts. Resolve them manually or run 'make force-install'."; \
+		exit 1; \
+	fi; \
 	log "Backing up existing files"; $(MAKE) backup; \
 	if [[ "$(OS)" == "Darwin" ]]; then \
 	  log "Running macOS bootstrap install"; \

@@ -1,31 +1,39 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
-- Root packages are Stow-ready directories: `zsh/`, `git/`, `tmux/`, `btop/`, `neofetch/`, `ranger/`, `bat/`, `nano/`, `ncdu/`. Each mirrors its target path (e.g., `zsh/.zshenv`, `btop/.config/btop/btop.conf`).
-- `packages.stow` is the single source of truth for what to stow. `Makefile` wraps common tasks.
-- `reference/` holds legacy or upstream copies (oh-my-zsh, nano syntax bundle, old configs); never deployed or edited for active use.
+`AGENTS.md` is the entrypoint for repo-specific guidance. Keep it short and stable; put deeper instructions under `docs/agents/` and package-specific details under `docs/`.
+
+## Start Here
+- This repo is a GNU Stow-managed dotfiles repo for user-space config only.
+- This repo targets macOS, Debian, and Ubuntu systems.
+- Root packages are listed in `packages.stow`: `zsh`, `tmux`, `git`, `ranger`, `fastfetch`, `btop`, `bat`, `ncdu`, `nano`, `shell`.
+- `packages.stow` is the single source of truth for what is stowed.
+- `reference/` contains legacy or upstream copies and is not part of the active install flow.
 - `bootstrap/` contains optional OS package installers (`macos.sh`, `debian.sh`).
 
-## Build, Test, and Development Commands
-- Dry-run links: `make status` (or `stow -n -v --target="$HOME" $(cat packages.stow)`).
-- Apply links: `make stow` (or `stow --target="$HOME" zsh git tmux btop neofetch ranger bat nano ncdu`).
-- Remove links: `make unstow`.
-- Install Antidote if missing: `make antidote` (clones to `~/.antidote`).
-- Bootstrap packages (optional): `make macos` or `make debian`.
+## Read Next
+- Repo context: [docs/agents/context/repo.md](docs/agents/context/repo.md)
+- Stable repo rules: [docs/agents/rules/repo.md](docs/agents/rules/repo.md)
+- Docs rules: [docs/agents/rules/docs.md](docs/agents/rules/docs.md)
+- Install and rollback flow: [docs/agents/workflows/install.md](docs/agents/workflows/install.md)
+- Docs maintenance flow: [docs/agents/workflows/maintain-docs.md](docs/agents/workflows/maintain-docs.md)
+- Verification matrix: [docs/agents/workflows/verify-by-change-type.md](docs/agents/workflows/verify-by-change-type.md)
+- Package lifecycle flow: [docs/agents/workflows/manage-packages.md](docs/agents/workflows/manage-packages.md)
+- Agent-config review flow: [docs/agents/workflows/review-agent-config.md](docs/agents/workflows/review-agent-config.md)
+- Repo review flow: [docs/agents/workflows/review-repo.md](docs/agents/workflows/review-repo.md)
+- Stow conflict handling: [docs/agents/workflows/stow-conflicts.md](docs/agents/workflows/stow-conflicts.md)
+- Changelog policy: [docs/agents/rules/changelog.md](docs/agents/rules/changelog.md)
+- Docs index: [docs/README.md](docs/README.md)
+- Make targets and behavior: [docs/makefile.md](docs/makefile.md)
+- Package map: [docs/packages.md](docs/packages.md)
+- Zsh details: [docs/zsh.md](docs/zsh.md) and [docs/shell.md](docs/shell.md)
+- Bootstrap package scripts: [docs/bootstrap.md](docs/bootstrap.md)
+- Human-readable audit trail: [docs/changelog/README.md](docs/changelog/README.md)
 
-## Coding Style & Naming Conventions
-- Shell scripts: bash (`set -euo pipefail`); 2-space indent preferred; keep commands explicit and portable.
-- Zsh config: pure zsh + Antidote; plugins listed in `.zsh_plugins.txt`; prompt lives in `prompt.zsh`; no Oh-My-Zsh sourcing.
-- Paths follow XDG: configs under `.config/<tool>/`; dotfiles (e.g., `.zshenv`, `.gitconfig`) at package root.
-
-## Testing Guidelines
-- No automated tests. Validate changes via `make status` to confirm Stow targets are clean and by opening a new shell to ensure zsh startup is fast and error-free.
-- When modifying shell scripts, run `shellcheck` locally if available; otherwise, sanity-check with `bash -n`.
-
-## Commit & Pull Request Guidelines
-- Commits: concise, imperative subject line (e.g., “Add nano syntax includes to nanorc”). Group related changes; avoid mixing functional changes with refactors.
-- PRs: include summary, rationale, and manual verification steps (e.g., `make status`, shell reload). Note any user-visible changes (new aliases, updated paths) and potential conflicts with existing `$HOME` files.
-
-## Security & Configuration Tips
-- Do not commit secrets or machine-specific paths. Keep system-level configs out of the repo.
-- When adopting existing dotfiles with Stow, back up or use `stow --adopt` cautiously to avoid overwriting user data.***
+## Non-Negotiables
+- Do not edit `reference/` for active behavior changes.
+- Do not commit secrets, machine-specific paths, or other host-local state.
+- Prefer `make` targets over ad hoc commands when the target already exists.
+- Validate relevant changes with `make status`; for shell changes also sanity-check with `bash -n` or `shellcheck` if available, then open a new shell.
+- Use relative Markdown links for internal docs and README cross-references.
+- Run the fuller review and changelog flow for meaningful change sets, typically before commit or handoff, not after every small edit.
+- Record significant behavioral or workflow changes in `docs/changelog/`; do not use it for trivial formatting-only edits.

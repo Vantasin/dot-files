@@ -6,11 +6,11 @@
 
 ## Key Variables
 - `PACKAGES_FILE=packages.stow` — authoritative list of packages to stow/unstow.
-- `STOW_FLAGS=--dotfiles --target="$(HOME)"` — applied to all stow commands.
+- `STOW_FLAGS=--dotfiles --ignore='(\.DS_Store|README\.md)$$' --target="$(HOME)"` — applied to all stow commands so Finder metadata and package README files are never stowed.
 - `BACKUP_ROOT=$HOME/.dotfiles_backup` — where backups are stored.
 
 ## Core Targets (order of operations)
-- `make install` — `check` → `status` (dry-run) → `backup` → `bootstrap (macos|debian) install` → `antidote` → `stow`.
+- `make install` — `check` → `status` (dry-run) → `backup` → `bootstrap (macos|debian) install` → `antidote` → `stow`. If `status` reports conflicts, install stops immediately before backup/bootstrap.
 - `make uninstall` — `unstow` → `bootstrap (macos|debian) uninstall` (does not touch backups or `~/.antidote`).
 - `make stow|unstow|restow|status` — link management for all packages in `packages.stow`.
 - `make force-install` — dry-run stow, move conflicting paths to `<name>.bak-<timestamp>`, then re-run stow (logs to `LOG_FILE`).

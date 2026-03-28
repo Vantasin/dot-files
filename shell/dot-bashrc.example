@@ -1,0 +1,6 @@
+# ~/.bashrc: executed by bash for non-login interactive shells.
+
+# Keep bash-specific interactive settings here.
+# If you want zsh as your login shell, use:
+#   chsh -s "$(command -v zsh)"
+# Do not exec zsh from ~/.bashrc.

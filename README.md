@@ -1,7 +1,7 @@
 # dot-files — Stow-managed, Antidote-powered dotfiles
 
 - Minimal, auditable dotfiles using GNU Stow for symlinks and pure Zsh with Antidote for plugins.
-- For users who want explicit, reversible, XDG-friendly configs on macOS or Debian-based Linux.
+- For users who want explicit, reversible, XDG-friendly configs on macOS, Debian, or Ubuntu.
 - Manages user-space configs only: zsh, git, tmux, ranger, fastfetch, btop, bat, ncdu, nano. No system services.
 - Stow handles placement; Antidote handles plugins; package managers (or bootstrap scripts) handle binaries.
 
@@ -24,21 +24,46 @@ cd ~/dot-files && make install
 ```
 > Use sudo only if required for package installs
 
-> What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow. It will refuse on conflicts rather than overwrite.
+> What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow.
+> If the dry-run reports conflicts, install stops immediately before backup/bootstrap and refuses to overwrite anything.
 
-Reload Shell:
+> The repo does not switch from bash into zsh via `.profile` or `.bashrc`.
+> If you want zsh as your actual login shell, use the explicit shell-change step below after install.
+
+Make zsh your login shell (optional but recommended):
+
+macOS:
 ```sh
-exec zsh
+grep -qxF "$(command -v zsh)" /etc/shells || echo "$(command -v zsh)" | sudo tee -a /etc/shells
+chsh -s "$(command -v zsh)"
 ```
-> Verify: `ls -l ~/.zshrc` points into `~/dot-files`
 
-Force install (renames conflicts in-place):
+Debian/Ubuntu:
+```sh
+chsh -s "$(command -v zsh)"
+```
+> Log out and back in for the login-shell change to take effect everywhere.
+
+If `make install` reports conflicts you want renamed aside automatically, run:
 ```sh
 cd ~/dot-files
 make force-install
 ```
-> Dry-runs stow, moves conflicting paths to `<name>.bak-YYYYMMDD-HHMMSS`, then re-runs stow.
-> Logs to `~/.dotfiles_install.log` by default (override with `LOG_FILE=...` or disable with `LOG_FILE=`).
+
+Start zsh now:
+```sh
+exec zsh
+```
+> Verify: `ls -l ~/.zshrc` points into `~/dot-files`
+> To make zsh your default login shell long-term, use `chsh` instead of relying on `.profile`.
+
+## Common Tasks
+
+- Preview links and conflicts: `make status`
+- Rename conflicting targets aside and stow: `make force-install`
+- Remove links: `make unstow`
+- Back up existing files: `make backup`
+- Restore missing files from a backup: `make restore BACKUP=~/.dotfiles_backup/<timestamp>`
 
 Rollback force-install moves:
 ```sh
@@ -55,25 +80,15 @@ make unstow
 ```
 > Or: `stow -D --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu`
 
-Backup:
-```sh
-cd ~/dot-files
-make backup
-```
+## Repo Guide
 
-Restore:
-```sh
-cd ~/dot-files
-make restore BACKUP=~/.dotfiles_backup/<timestamp>
-```
-
-## More Details
-- Makefile: see [docs/makefile.md](docs/makefile.md) (targets, backup/restore, stow flow).
-- Zsh setup: see [docs/zsh.md](docs/zsh.md) (layout, history, Antidote, prompt toggle).
-- Fastfetch: see [docs/fastfetch.md](docs/fastfetch.md).
-- Packages overview: see [docs/packages.md](docs/packages.md).
-- Bootstrap scripts: see [docs/bootstrap.md](docs/bootstrap.md).
-- Other components: see docs for git, tmux, ranger, bat, btop, ncdu, nano, shell.
+- Docs hub: [docs/README.md](docs/README.md)
+- Stow, install, backup, and restore behavior: [docs/makefile.md](docs/makefile.md)
+- Package index and per-package links: [docs/packages.md](docs/packages.md)
+- Zsh and shell behavior: [docs/zsh.md](docs/zsh.md), [docs/shell.md](docs/shell.md)
+- Bootstrap scripts: [docs/bootstrap.md](docs/bootstrap.md)
+- Agent and maintenance guidance: [AGENTS.md](AGENTS.md), [docs/agents/README.md](docs/agents/README.md)
+- Human-readable audit trail: [docs/changelog/README.md](docs/changelog/README.md)
 
 ## License
 [LICENSE](LICENSE)
