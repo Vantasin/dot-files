@@ -51,6 +51,13 @@ zsh
 > Verify with the canonical path here: `ls -l ~/.zshrc ~/.zshenv ~/.zsh_plugins.txt ~/.config/shell`
 > Local login-shell setup such as Homebrew `brew shellenv` belongs in a machine-local profile file, not in the active Stow package set.
 
+Make zsh your default shell on Debian/Ubuntu (optional, recommended if you want to start in zsh by default):
+```sh
+chsh -s "$(command -v zsh)"
+```
+> If `chsh` rejects the path, check `command -v zsh` and `cat /etc/shells`.
+> Open a new terminal or log out and back in after changing the login shell.
+
 ## Common Tasks
 
 - Preview links and conflicts: `make status`
