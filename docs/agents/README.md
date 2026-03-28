@@ -12,6 +12,7 @@ This directory holds agent-facing context, rules, and workflows for maintaining 
 ## Workflows
 - [workflows/install.md](workflows/install.md)
 - [workflows/stow-conflicts.md](workflows/stow-conflicts.md)
+- [workflows/prepare-commit.md](workflows/prepare-commit.md)
 - [workflows/verify-by-change-type.md](workflows/verify-by-change-type.md)
 - [workflows/manage-packages.md](workflows/manage-packages.md)
 - [workflows/review-repo.md](workflows/review-repo.md)

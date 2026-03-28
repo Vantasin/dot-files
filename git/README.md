@@ -12,4 +12,5 @@ This package stows global Git config into `~/.gitconfig` and `~/.config/git/`.
 
 ## Related Docs
 - [../docs/git.md](../docs/git.md)
+- [../.githooks/README.md](../.githooks/README.md)
 - [../docs/packages.md](../docs/packages.md)

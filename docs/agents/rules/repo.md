@@ -58,6 +58,13 @@
 - Do not leave stale package directories undocumented or package list entries pointing at missing directories.
 - Review Stow-facing package changes with `make status`.
 
+## Commit Rules
+- Commits should stage one coherent change set and leave unrelated work unstaged.
+- Run the smallest relevant verification from the verification matrix before committing.
+- Review the staged diff, not just the working tree, before creating a commit.
+- Use concise imperative commit subjects.
+- Do not auto-commit after every edit; commits should happen when requested or when deliberately wrapping up a coherent change set.
+
 ## Layout And Ownership
 - Treat `packages.stow` as authoritative for active packages.
 - Keep active changes inside the package directories, `Makefile`, `bootstrap/`, and `docs/`.

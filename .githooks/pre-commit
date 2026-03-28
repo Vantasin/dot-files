@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+mapfile -t staged_files < <(git diff --cached --name-only --diff-filter=ACMR)
+
+if [[ ${#staged_files[@]} -eq 0 ]]; then
+  exit 0
+fi
+
+fail() {
+  printf 'pre-commit: %s\n' "$*" >&2
+  exit 1
+}
+
+needs_stow_check=0
+bash_n_files=()
+shellcheck_files=()
+
+for path in "${staged_files[@]}"; do
+  case "$path" in
+    *.DS_Store)
+      fail "refusing to commit staged metadata file: $path"
+      ;;
+  esac
+
+  case "$path" in
+    Makefile|packages.stow|bat/*|bootstrap/*|btop/*|fastfetch/*|git/*|nano/*|ncdu/*|ranger/*|shell/*|tmux/*|zsh/*)
+      needs_stow_check=1
+      ;;
+  esac
+
+  case "$path" in
+    bootstrap/*.sh|scripts/*.sh|shell/dot-profile|shell/dot-profile.example|shell/dot-bashrc.example)
+      bash_n_files+=("$path")
+      ;;
+  esac
+
+  case "$path" in
+    bootstrap/*.sh|scripts/*.sh)
+      shellcheck_files+=("$path")
+      ;;
+  esac
+done
+
+if [[ ${#bash_n_files[@]} -gt 0 ]]; then
+  bash -n "${bash_n_files[@]}"
+fi
+
+if [[ ${#shellcheck_files[@]} -gt 0 ]] && command -v shellcheck >/dev/null 2>&1; then
+  shellcheck "${shellcheck_files[@]}"
+fi
+
+if [[ $needs_stow_check -eq 1 ]]; then
+  tmp_home="$(mktemp -d)"
+  tmp_output="$(mktemp)"
+  cleanup() {
+    rm -rf "$tmp_home"
+    rm -f "$tmp_output"
+  }
+  trap cleanup EXIT
+
+  if ! HOME="$tmp_home" make status >"$tmp_output" 2>&1; then
+    cat "$tmp_output" >&2
+    fail "make status failed against a temporary HOME; fix repo layout or Stow issues before committing"
+  fi
+fi

@@ -17,6 +17,7 @@
 5. For shell or bootstrap changes, run `bash -n` and `shellcheck` if available.
 6. If zsh startup behavior changed, open a new shell and confirm it starts cleanly and quickly.
 7. Use the verification matrix in `docs/agents/workflows/verify-by-change-type.md` when the change crosses multiple areas.
+8. If the goal is to create a commit, finish with the commit-preparation workflow.
 
 ## Consistency Checks
 - Active packages should exist in `packages.stow`, have matching directories, and be described consistently in docs.

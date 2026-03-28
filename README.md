@@ -85,6 +85,7 @@ make unstow
 - Docs hub: [docs/README.md](docs/README.md)
 - Stow, install, backup, and restore behavior: [docs/makefile.md](docs/makefile.md)
 - Package index and per-package links: [docs/packages.md](docs/packages.md)
+- Git config and repo-local hooks: [docs/git.md](docs/git.md), [.githooks/README.md](.githooks/README.md)
 - Zsh and shell behavior: [docs/zsh.md](docs/zsh.md), [docs/shell.md](docs/shell.md)
 - Bootstrap scripts: [docs/bootstrap.md](docs/bootstrap.md)
 - Agent and maintenance guidance: [AGENTS.md](AGENTS.md), [docs/agents/README.md](docs/agents/README.md)

@@ -36,6 +36,10 @@ Use this as a quick selector for the smallest verification set that matches the 
 - Run [review-agent-config.md](review-agent-config.md).
 - Confirm `AGENTS.md`, `docs/agents/README.md`, and `docs/README.md` still point to the right entrypoints.
 
+## Commit Preparation
+- Run [prepare-commit.md](prepare-commit.md) when the change set is ready to stage and commit.
+- If repo-local hooks are enabled, expect the staged checks to re-run in `.githooks/pre-commit`.
+
 ## Broad Or Cross-Cutting Changes
 - Run the relevant checks from each affected category rather than relying on a single generic review step.
 - If the change set is meaningful, update or add a changelog entry near commit or handoff time.

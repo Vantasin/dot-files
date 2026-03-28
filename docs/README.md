@@ -22,3 +22,4 @@ This directory is the central index for repo documentation. Use the root [README
 ## Maintenance Docs
 - [agents/README.md](agents/README.md) — agent-oriented context, rules, and workflows
 - [changelog/README.md](changelog/README.md) — human-readable audit trail policy and entries
+- [../.githooks/README.md](../.githooks/README.md) — repo-local pre-commit hook setup
