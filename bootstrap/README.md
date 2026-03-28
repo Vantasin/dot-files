@@ -10,7 +10,9 @@ This directory contains optional OS package installation and uninstall scripts. 
 
 ## Usage
 - `make macos ACTION=install`
+- `make macos-complete`
 - `make macos ACTION=install BREWFILE=Brewfile.complete`
+- `make install-complete`
 - `make macos ACTION=uninstall`
 - `make debian ACTION=install`
 - `make debian ACTION=uninstall`

@@ -12,6 +12,7 @@
 # Local caches & virtual envs
 .cache/
 .direnv/
+.obsidian/
 .venv/
 venv/
 node_modules/

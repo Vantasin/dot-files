@@ -10,7 +10,8 @@
 ## Usage
 - Called via Makefile: `make macos ACTION=install|uninstall` or `make debian ACTION=install|uninstall`.
 - macOS install applies the repo root `Brewfile` with `brew bundle --file=Brewfile`.
-- To apply a broader machine snapshot intentionally, override the manifest: `make macos ACTION=install BREWFILE=Brewfile.complete`.
+- To apply a broader machine snapshot intentionally, use `make macos-complete` or override the manifest directly with `make macos ACTION=install BREWFILE=Brewfile.complete`.
+- To run the full dotfiles install flow with the broader snapshot, use `make install-complete`.
 - macOS uninstall removes Brewfile-declared formulae, casks, and taps; it does not use `brew bundle cleanup`, which would target undeclared packages instead.
 - Debian install attempts core packages individually; optional packages are attempted if available.
 - Debian uninstall removes the same apt package sets; neither uninstall path touches backups or `~/.antidote`.

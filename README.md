@@ -17,14 +17,14 @@ elif [ -x /usr/local/bin/brew ]; then
 fi
 brew install git stow rsync
 git clone https://github.com/Vantasin/dot-files.git ~/Git/dot-files
-cd ~/dot-files && make install
+cd ~/Git/dot-files && make install
 ```
 
 Debian/Ubuntu:
 ```sh
 sudo apt-get update && sudo apt-get install -y git stow rsync
-git clone https://github.com/Vantasin/dot-files.git ~/git/dot-files
-cd ~/dot-files && make install
+git clone https://github.com/Vantasin/dot-files.git ~/Git/dot-files
+cd ~/Git/dot-files && make install
 ```
 > Use sudo only if required for package installs
 
@@ -34,10 +34,11 @@ cd ~/dot-files && make install
 > For a broader machine restore snapshot, use [Brewfile.complete](Brewfile.complete) intentionally instead of making it the default bootstrap manifest.
 > The repo does not install `~/.profile` or `~/.zprofile` by default.
 > Keep login-shell files local to each machine; see [shell/README.md](shell/README.md) for optional examples.
+> The canonical clone path in these docs is `~/Git/dot-files`.
 
 If `make install` reports conflicts you want renamed aside automatically, run:
 ```sh
-cd ~/dot-files
+cd ~/Git/dot-files
 make force-install
 ```
 
@@ -45,7 +46,8 @@ Start zsh now:
 ```sh
 zsh
 ```
-> Verify: `ls -l ~/.zshrc` points into `~/dot-files`
+> Verify: `ls -l ~/.zshrc` points into `~/Git/dot-files`
+> Verify with the canonical path here: `ls -l ~/.zshrc ~/.zshenv ~/.zsh_plugins.txt ~/.config/shell`
 > Local login-shell setup such as Homebrew `brew shellenv` belongs in a machine-local profile file, not in the active Stow package set.
 
 ## Common Tasks
@@ -56,11 +58,12 @@ zsh
 - Back up existing files: `make backup`
 - Restore missing files from a backup: `make restore BACKUP=~/.dotfiles_backup/<timestamp>`
 - Apply the baseline macOS bundle: `make macos ACTION=install`
-- Apply the complete macOS bundle snapshot: `make macos ACTION=install BREWFILE=Brewfile.complete`
+- Apply the complete macOS bundle snapshot: `make macos-complete`
+- Run the full install flow with the complete macOS bundle snapshot: `make install-complete`
 
 Rollback force-install moves:
 ```sh
-cd ~/dot-files
+cd ~/Git/dot-files
 DRY_RUN=1 scripts/rollback-force-install.sh   # preview
 DRY_RUN=0 scripts/rollback-force-install.sh   # apply (default)
 ```
@@ -68,7 +71,7 @@ DRY_RUN=0 scripts/rollback-force-install.sh   # apply (default)
 
 Rollback:
 ```sh
-cd ~/dot-files
+cd ~/Git/dot-files
 make unstow
 ```
 > Or: `stow -D --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu`

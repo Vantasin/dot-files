@@ -8,7 +8,7 @@ BACKUP_ROOT := $(HOME)/.dotfiles_backup
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 LOG_FILE ?= $(HOME)/.dotfiles_install.log
 
-.PHONY: help check antidote stow unstow restow status force-install macos debian install uninstall backup restore
+.PHONY: help check antidote stow unstow restow status force-install macos macos-complete debian install install-complete uninstall backup restore
 
 help:
 	@printf "Targets:\n"
@@ -23,8 +23,10 @@ help:
 	@printf "  backup      Backup existing dotfiles to $(BACKUP_ROOT)/<timestamp>\n"
 	@printf "  restore     Restore missing files from BACKUP=path (non-overwriting)\n"
 	@printf "  install     Bootstrap tools, backup, then stow dotfiles\n"
+	@printf "  install-complete Bootstrap with Brewfile.complete, then backup and stow dotfiles\n"
 	@printf "  uninstall   Unstow dotfiles; optionally call OS bootstrap uninstall\n"
 	@printf "  macos       Run bootstrap/macos.sh with the given ACTION (install/uninstall)\n"
+	@printf "  macos-complete Run bootstrap/macos.sh install with Brewfile.complete\n"
 	@printf "  debian      Run bootstrap/debian.sh with the given ACTION (install/uninstall)\n"
 
 check:
@@ -106,6 +108,9 @@ macos:
 		echo "bootstrap/macos.sh not found or not executable"; \
 	fi
 
+macos-complete:
+	@$(MAKE) macos ACTION=install BREWFILE=Brewfile.complete
+
 debian:
 	@if [[ -x "bootstrap/debian.sh" ]]; then \
 		ACTION="$${ACTION:-install}"; \
@@ -174,6 +179,9 @@ install:
 	log "Ensuring Antidote is installed"; $(MAKE) antidote; \
 	log "Stowing packages"; $(MAKE) stow; \
 	log "Install complete"
+
+install-complete:
+	@$(MAKE) install BREWFILE=Brewfile.complete
 
 uninstall:
 	$(MAKE) unstow
