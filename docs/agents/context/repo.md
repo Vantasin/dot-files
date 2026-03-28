@@ -18,7 +18,8 @@
 ## Source Of Truth
 - `packages.stow` defines what packages are installed or removed by Stow.
 - `Makefile` wraps the common install, backup, restore, stow, and rollback flows.
-- `Brewfile` defines the macOS Homebrew packages managed by `bootstrap/macos.sh`.
+- `Brewfile` defines the default macOS Homebrew packages managed by `bootstrap/macos.sh`.
+- `Brewfile.complete` is an optional full-machine Homebrew Bundle snapshot generated from the current Mac.
 - Package-specific behavior lives in `docs/*.md`.
 
 ## Important Directories

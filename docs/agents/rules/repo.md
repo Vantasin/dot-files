@@ -8,7 +8,8 @@
 - Detailed operational and package-specific behavior belongs in `docs/*.md`.
 - `docs/packages.md` is the package index and should stay aligned with `packages.stow` and the package directory READMEs.
 - `bootstrap/` is for OS package installation helpers, not for stowed dotfile content.
-- `Brewfile` is the repo-root macOS package manifest and should remain aligned with `bootstrap/macos.sh` and macOS onboarding docs.
+- `Brewfile` is the repo-root default macOS package manifest and should remain aligned with `bootstrap/macos.sh` and macOS onboarding docs.
+- `Brewfile.complete` is an optional complete-machine snapshot and should stay clearly distinct from the default bootstrap manifest.
 - `shell/` is for optional local login-shell examples and is not part of the active Stow package set.
 - `scripts/` is for maintenance helpers tied to documented workflows.
 - `reference/` is archival or upstream material and should not drive active behavior changes.
@@ -46,8 +47,9 @@
 - `bootstrap/` installs or removes user-space tools only; it must not manage dotfiles directly.
 - Bootstrap behavior must not silently change the user's login shell or mutate unrelated shell startup files.
 - Keep platform-specific package handling isolated inside the bootstrap scripts or their documented Make entrypoints.
-- `Brewfile` is authoritative for the macOS Homebrew package and app set; do not duplicate that list in `bootstrap/macos.sh`.
-- If bootstrap package sets or behavior change, update `Brewfile` as needed and keep `docs/bootstrap.md` and the root `README.md` aligned.
+- `Brewfile` is authoritative for the default macOS Homebrew package and app set; do not duplicate that list in `bootstrap/macos.sh`.
+- Keep `Brewfile.complete` as an intentionally broader snapshot generated from the current Mac, not as the default install target.
+- If bootstrap package sets or behavior change, update `Brewfile` as needed, regenerate `Brewfile.complete` when appropriate, and keep `docs/bootstrap.md` and the root `README.md` aligned.
 
 ## Profile Rules
 - The active install should not require owning `~/.profile` or `~/.zprofile`.

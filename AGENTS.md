@@ -7,7 +7,8 @@
 - This repo targets macOS, Debian, and Ubuntu systems.
 - Root packages are listed in `packages.stow`: `zsh`, `tmux`, `git`, `ranger`, `fastfetch`, `btop`, `bat`, `ncdu`, `nano`.
 - `packages.stow` is the single source of truth for what is stowed.
-- `Brewfile` is the macOS Homebrew package manifest used by `bootstrap/macos.sh`.
+- `Brewfile` is the default repo-focused macOS Homebrew package manifest used by `bootstrap/macos.sh`.
+- `Brewfile.complete` is an optional full-machine Homebrew Bundle snapshot and is not the default bootstrap manifest.
 - `shell/` holds optional local login-shell examples and is not part of the active Stow package set.
 - `reference/` contains legacy or upstream copies and is not part of the active install flow.
 - `bootstrap/` contains optional OS package installers (`macos.sh`, `debian.sh`).

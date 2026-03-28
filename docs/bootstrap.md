@@ -1,7 +1,7 @@
 # Bootstrap Scripts Notes
 
 ## Location
-- `bootstrap/macos.sh`, `bootstrap/debian.sh`, and the repo root `Brewfile`.
+- `bootstrap/macos.sh`, `bootstrap/debian.sh`, the repo root `Brewfile`, and the optional `Brewfile.complete`.
 
 ## Purpose
 - Install/remove user-space packages only; on macOS, the Brewfile may also include GUI apps via casks.
@@ -10,6 +10,7 @@
 ## Usage
 - Called via Makefile: `make macos ACTION=install|uninstall` or `make debian ACTION=install|uninstall`.
 - macOS install applies the repo root `Brewfile` with `brew bundle --file=Brewfile`.
+- To apply a broader machine snapshot intentionally, override the manifest: `make macos ACTION=install BREWFILE=Brewfile.complete`.
 - macOS uninstall removes Brewfile-declared formulae, casks, and taps; it does not use `brew bundle cleanup`, which would target undeclared packages instead.
 - Debian install attempts core packages individually; optional packages are attempted if available.
 - Debian uninstall removes the same apt package sets; neither uninstall path touches backups or `~/.antidote`.
@@ -18,8 +19,11 @@
 ## Safety
 - `set -euo pipefail`; uses sudo explicitly where needed.
 - Brewfile-driven macOS installs keep package declarations in one place instead of duplicating them in shell scripts.
+- Keep `Brewfile` focused on the repo's stable baseline; use `Brewfile.complete` for complete local restore snapshots instead of expanding the default bootstrap set indiscriminately.
 - Debian install skips packages not available in current apt sources; leaves state untouched on failure.
 
 ## Package Sources
-- macOS (Homebrew): declared in the repo root [../Brewfile](../Brewfile).
+- macOS baseline (Homebrew): declared in the repo root [../Brewfile](../Brewfile).
+- macOS complete snapshot (Homebrew): declared in [../Brewfile.complete](../Brewfile.complete), generated from the current machine with `brew bundle dump --file=Brewfile.complete --force`.
+- When validating `Brewfile.complete`, use `brew bundle check --no-upgrade --file=Brewfile.complete` so the snapshot is checked for presence without failing on merely outdated packages.
 - Debian/Ubuntu (apt): declared in `bootstrap/debian.sh`, with a separate optional package list.

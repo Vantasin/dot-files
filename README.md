@@ -31,6 +31,7 @@ cd ~/dot-files && make install
 > What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow.
 > If the dry-run reports conflicts, install stops immediately before backup/bootstrap and refuses to overwrite anything.
 > On macOS, the bootstrap package set comes from the repo root [Brewfile](Brewfile) via `brew bundle`.
+> For a broader machine restore snapshot, use [Brewfile.complete](Brewfile.complete) intentionally instead of making it the default bootstrap manifest.
 > The repo does not install `~/.profile` or `~/.zprofile` by default.
 > Keep login-shell files local to each machine; see [shell/README.md](shell/README.md) for optional examples.
 
@@ -54,6 +55,8 @@ zsh
 - Remove links: `make unstow`
 - Back up existing files: `make backup`
 - Restore missing files from a backup: `make restore BACKUP=~/.dotfiles_backup/<timestamp>`
+- Apply the baseline macOS bundle: `make macos ACTION=install`
+- Apply the complete macOS bundle snapshot: `make macos ACTION=install BREWFILE=Brewfile.complete`
 
 Rollback force-install moves:
 ```sh
@@ -74,7 +77,7 @@ make unstow
 
 - Docs hub: [docs/README.md](docs/README.md)
 - Stow, install, backup, and restore behavior: [docs/makefile.md](docs/makefile.md)
-- macOS package manifest and bootstrap notes: [Brewfile](Brewfile), [docs/bootstrap.md](docs/bootstrap.md)
+- macOS package manifests and bootstrap notes: [Brewfile](Brewfile), [Brewfile.complete](Brewfile.complete), [docs/bootstrap.md](docs/bootstrap.md)
 - Package index and per-package links: [docs/packages.md](docs/packages.md)
 - Git config and repo-local hooks: [docs/git.md](docs/git.md), [.githooks/README.md](.githooks/README.md)
 - Zsh and local shell notes: [docs/zsh.md](docs/zsh.md), [docs/shell.md](docs/shell.md)

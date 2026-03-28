@@ -8,6 +8,7 @@
 - `PACKAGES_FILE=packages.stow` — authoritative list of packages to stow/unstow.
 - `STOW_FLAGS=--dotfiles --ignore='(\.DS_Store|README\.md)$$' --target="$(HOME)"` — applied to all stow commands so Finder metadata and package README files are never stowed.
 - `BACKUP_ROOT=$HOME/.dotfiles_backup` — where backups are stored.
+- `BREWFILE` — optional override for `make macos`; defaults to the repo root `Brewfile`.
 
 ## Core Targets (order of operations)
 - `make install` — `check` → `status` (dry-run) → `backup` → `bootstrap (macos|debian) install` → `antidote` → `stow`. If `status` reports conflicts, install stops immediately before backup/bootstrap.
@@ -17,7 +18,7 @@
 - `make backup` — rsyncs existing files in scope to `~/.dotfiles_backup/<timestamp>`, skipping symlinks into the repo.
 - `make restore BACKUP=…` — rsyncs missing files back without overwriting anything that exists.
 - `make antidote` — installs Antidote to `~/.antidote` if missing.
-- `make macos|debian ACTION=install|uninstall` — run OS package installs/removals only. On macOS, `make macos ACTION=install` applies the repo root `Brewfile`.
+- `make macos|debian ACTION=install|uninstall` — run OS package installs/removals only. On macOS, `make macos ACTION=install` applies the repo root `Brewfile`, and `BREWFILE=...` can point at an alternate manifest such as `Brewfile.complete`.
 
 ## Backup/Restore Scope
 - Backs up active Stow-managed targets such as `~/.zshenv`, `~/.zshrc`, `~/.zsh_plugins.txt`, `~/.tmux.conf`, `~/.gitconfig`, `~/.config/shell`, `~/.config/git`, and the managed `~/.config/*` tool directories.

@@ -22,6 +22,7 @@ Use this as a quick selector for the smallest verification set that matches the 
 - Run `bash -n` on the bootstrap scripts and `shellcheck` if available.
 - Review package handling separately for macOS and Debian/Ubuntu.
 - On macOS, confirm `Brewfile` and `bootstrap/macos.sh` stay aligned, and run `brew bundle check --file=Brewfile` when practical.
+- If `Brewfile.complete` changed, confirm it still reads as a broader snapshot rather than silently becoming the default bootstrap manifest, and validate it with `brew bundle check --no-upgrade --file=Brewfile.complete`.
 - Confirm docs still match in `docs/bootstrap.md` and the root `README.md` if onboarding changed.
 
 ## Script Changes
