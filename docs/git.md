@@ -6,10 +6,13 @@
 ## Content
 - Global git settings and aliases only (no repo-specific config).
 - Uses user-space paths; does not touch system git config.
+- Sets `core.excludesFile` to `~/.config/git/ignore` for global ignore patterns managed by this repo.
+- The managed global ignore file is the right place for editor/workspace metadata such as `.obsidian/`.
 
 ## Usage
 - Apply via Stow: `stow --dotfiles --target="$HOME" git`.
 - Edit `git/dot-gitconfig` to change settings; restow to apply.
+- Edit `git/dot-config/git/ignore` to change global ignore patterns; restow to apply.
 
 ## Repo-Local Hooks
 - This repo can use a local hooks directory at `.githooks/`.

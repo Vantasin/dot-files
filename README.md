@@ -41,6 +41,7 @@ If `make install` reports conflicts you want renamed aside automatically, run:
 cd ~/Git/dot-files
 make force-install
 ```
+> `make force-install` is the only flow that works with `scripts/rollback-force-install.sh`.
 
 Start zsh now:
 ```sh
@@ -61,20 +62,36 @@ zsh
 - Apply the complete macOS bundle snapshot: `make macos-complete`
 - Run the full install flow with the complete macOS bundle snapshot: `make install-complete`
 
-Rollback force-install moves:
+Undo a normal install:
 ```sh
 cd ~/Git/dot-files
+make uninstall
+make restore BACKUP=~/.dotfiles_backup/<timestamp>
+```
+> Use `make uninstall` to remove the managed links and run the OS bootstrap uninstall path.
+> If you only want to remove the links and keep packages installed, use `make unstow` instead of `make uninstall`.
+> Use `make restore` for backups created by `make install` or `make backup`.
+
+Undo a force-install:
+```sh
+cd ~/Git/dot-files
+make uninstall
 DRY_RUN=1 scripts/rollback-force-install.sh   # preview
 DRY_RUN=0 scripts/rollback-force-install.sh   # apply (default)
 ```
+> This only restores files that were renamed aside by `make force-install`.
+> Use `make unstow` instead of `make uninstall` if you want to keep packages installed while removing the links before restoring the moved files.
 > Uses `~/.dotfiles_install.log`; pick an older run with `RUN_INDEX=2` (3=third-latest, etc).
 
-Rollback:
+How restore works:
 ```sh
-cd ~/Git/dot-files
-make unstow
+ls -1 ~/.dotfiles_backup
+make restore BACKUP=~/.dotfiles_backup/<timestamp>
 ```
-> Or: `stow -D --dotfiles --target="$HOME" zsh git tmux btop fastfetch ranger bat nano ncdu`
+> `make install` runs `make backup` first, so normal installs usually create a new timestamped backup under `~/.dotfiles_backup/`.
+> Choose the backup timestamp you want from `ls -1 ~/.dotfiles_backup`.
+> `make restore` only restores files that do not currently exist; move or remove a current file first if you want the backup copy restored in its place.
+> `make restore` is for backup directories. `scripts/rollback-force-install.sh` is only for files moved aside by `make force-install`.
 
 ## Repo Guide
 

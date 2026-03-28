@@ -18,7 +18,11 @@ if ! [[ "$RUN_INDEX" =~ ^[0-9]+$ ]] || [[ "$RUN_INDEX" -lt 1 ]]; then
   exit 1
 fi
 
-mapfile -t start_lines < <(grep -n "Starting force-install" "$LOG_FILE" | cut -d: -f1)
+start_lines=()
+while IFS=: read -r line_no _; do
+  start_lines+=("$line_no")
+done < <(grep -n "Starting force-install" "$LOG_FILE")
+
 if [[ "${#start_lines[@]}" -eq 0 ]]; then
   echo "No force-install runs found in $LOG_FILE"
   exit 1
@@ -29,7 +33,8 @@ if [[ "$RUN_INDEX" -gt "${#start_lines[@]}" ]]; then
   exit 1
 fi
 
-start_line="${start_lines[@]: -$RUN_INDEX:1}"
+start_index=$(( ${#start_lines[@]} - RUN_INDEX ))
+start_line="${start_lines[$start_index]}"
 moves=$(tail -n +"$start_line" "$LOG_FILE" | awk '/ Moving /{print $(NF-2) "\t" $(NF)}')
 
 if [[ -z "$moves" ]]; then

@@ -1,6 +1,7 @@
 # Global ignore patterns
 .DS_Store
 Thumbs.db
+.obsidian/
 *.swp
 *.swo
 *.pyc

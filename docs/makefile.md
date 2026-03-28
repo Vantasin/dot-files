@@ -32,6 +32,11 @@
 - Install/uninstall is safe to rerun; bootstrap scripts attempt packages individually and log skips/failures.
 - No system services are touched; everything is user-space.
 
+## Recovery Paths
+- For a normal `make install`, undo links with `make uninstall` or `make unstow`, then restore backed-up files with `make restore BACKUP=…` if needed.
+- `scripts/rollback-force-install.sh` is only for files renamed aside by `make force-install`; it does not restore from `make backup`.
+- A typical force-install rollback sequence is `make uninstall` (or `make unstow`) followed by `DRY_RUN=0 scripts/rollback-force-install.sh`.
+
 ## Logging
 - `LOG_FILE` controls where `make install` and `make force-install` append logs (default: `~/.dotfiles_install.log`). Disable logging with `LOG_FILE=` when invoking make.
 - `scripts/rollback-force-install.sh` replays the most recent (or Nth most recent) `make force-install` moves from the log to restore backups. Use `DRY_RUN=1` to preview and `RUN_INDEX=2` to target the second-most-recent run.
