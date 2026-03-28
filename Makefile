@@ -130,7 +130,7 @@ backup:
 	for f in "$${files[@]}"; do \
 	  if [[ -e "$$f" ]]; then \
 	    if [[ -L "$$f" ]]; then \
-	      target="$$(readlink -f "$$f")"; \
+	      target="$$(perl -MCwd=abs_path -e 'my $$p = shift; my $$a = abs_path($$p); exit 1 unless defined $$a; print $$a' "$$f")"; \
 	      case "$$target" in $$repo_root/*) echo "Skipping symlink into repo: $$HOME/$$f"; continue ;; esac; \
 	    fi; \
 	    rsync -a --relative "$$f" "$$BACKUP_DIR/"; \

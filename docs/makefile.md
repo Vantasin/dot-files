@@ -21,7 +21,7 @@
 
 ## Backup/Restore Scope
 - Backs up: `~/.profile`, zsh files (`.zsh*`), git, tmux, nano, btop, bat, ncdu, fastfetch configs under `~/.config`.
-- Skips any symlink already pointing into this repo to avoid backing up the repo itself.
+- Skips any symlink already pointing into this repo to avoid backing up the repo itself. Symlink target resolution is implemented in a macOS- and Linux-compatible way instead of relying on `readlink -f`.
 - Restore only copies files that do not already exist (`rsync --ignore-existing`); will not overwrite current files.
 
 ## Safety and Idempotency
