@@ -4,6 +4,7 @@ This package stows ranger config into `~/.config/ranger/`.
 
 ## Main Content
 - `dot-config/ranger/rc.conf`
+- `dot-config/ranger/rifle.conf`
 
 ## Apply
 - `make stow`

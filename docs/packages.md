@@ -4,7 +4,7 @@
 - [../zsh/README.md](../zsh/README.md) — interactive zsh config and shared shell modules. Details: [zsh.md](zsh.md)
 - [../git/README.md](../git/README.md) — global Git config. Details: [git.md](git.md)
 - [../tmux/README.md](../tmux/README.md) — tmux config. Details: [tmux.md](tmux.md)
-- [../ranger/README.md](../ranger/README.md) — ranger config. Details: [ranger.md](ranger.md)
+- [../ranger/README.md](../ranger/README.md) — ranger config and rifle opener rules. Details: [ranger.md](ranger.md)
 - [../fastfetch/README.md](../fastfetch/README.md) — fastfetch config. Details: [fastfetch.md](fastfetch.md)
 - [../btop/README.md](../btop/README.md) — btop config. Details: [btop.md](btop.md)
 - [../bat/README.md](../bat/README.md) — bat config. Details: [bat.md](bat.md)
