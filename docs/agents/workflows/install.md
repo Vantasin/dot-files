@@ -1,10 +1,10 @@
 # Install Workflow
 
 ## Normal Install
-1. Run `make status` first to confirm whether Stow sees conflicts.
+1. If `stow` is already installed, run `make status` first to confirm whether Stow sees conflicts.
 2. If `make status` is clean, run `make install`.
-3. `make install` performs: `check` -> `status` -> `backup` -> OS bootstrap install -> `antidote` -> `stow`.
-4. If the dry-run reports conflicts, `make install` now stops immediately before backup or bootstrap work.
+3. `make install` validates the package list, bootstraps missing `git`/`stow`/`rsync` if needed, then performs: `check` -> `status` -> `backup` -> OS bootstrap install if it did not already run -> `antidote` -> `stow`.
+4. If the dry-run reports conflicts, `make install` stops before backup and refuses to overwrite anything.
 
 ## Force Install
 1. Use `make force-install` when the user wants existing target files renamed aside automatically.
@@ -13,7 +13,10 @@
 
 ## Backup And Restore
 - `make backup` creates `~/.dotfiles_backup/<timestamp>` and skips symlinks that already point into this repo.
-- `make restore BACKUP=...` restores only missing files and does not overwrite current ones.
+- `make list-backups` shows the available timestamped backup directories.
+- `make restore BACKUP=...` restores only missing files and does not overwrite current ones; it uses `rsync` when present and otherwise falls back to `cp`.
+- `make restore-latest` resolves the newest timestamped backup and then runs `make restore`.
+- `make restore-prompt` offers an interactive numbered picker, runs `make restore` for the selected backup, and exits cleanly when canceled.
 - `scripts/rollback-force-install.sh` replays the logged `force-install` moves to restore backups after a force install.
 
 ## Verification

@@ -7,6 +7,7 @@ packages=(
   git
   zsh
   stow
+  rsync
   nano
   tmux
   ranger

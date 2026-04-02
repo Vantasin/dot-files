@@ -8,7 +8,7 @@ BACKUP_ROOT := $(HOME)/.dotfiles_backup
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 LOG_FILE ?= $(HOME)/.dotfiles_install.log
 
-.PHONY: help check antidote stow unstow restow status force-install macos macos-complete debian install install-complete uninstall backup restore
+.PHONY: help check check-packages check-stow antidote stow unstow restow status force-install macos macos-complete debian install install-complete uninstall backup list-backups restore restore-latest restore-prompt
 
 help:
 	@printf "Targets:\n"
@@ -21,8 +21,11 @@ help:
 	@printf "  restow      Restow all packages listed in %s\n" "$(PACKAGES_FILE)"
 	@printf "  force-install Move conflicts to <path>.bak-%s then stow (logs to %s)\n" "$(TIMESTAMP)" "$(LOG_FILE)"
 	@printf "  backup      Backup existing dotfiles to $(BACKUP_ROOT)/<timestamp>\n"
+	@printf "  list-backups List available backups under $(BACKUP_ROOT)\n"
 	@printf "  restore     Restore missing files from BACKUP=path (non-overwriting)\n"
-	@printf "  install     Bootstrap tools, backup, then stow dotfiles\n"
+	@printf "  restore-latest Restore missing files from the most recent backup\n"
+	@printf "  restore-prompt Interactively choose a backup to restore\n"
+	@printf "  install     Bootstrap missing tools if needed, backup, then stow dotfiles\n"
 	@printf "  install-complete Bootstrap with Brewfile.complete, then backup and stow dotfiles\n"
 	@printf "  uninstall   Unstow dotfiles; optionally call OS bootstrap uninstall\n"
 	@printf "  macos       Run bootstrap/macos.sh with the given ACTION (install/uninstall)\n"
@@ -30,10 +33,17 @@ help:
 	@printf "  debian      Run bootstrap/debian.sh with the given ACTION (install/uninstall)\n"
 
 check:
+	@$(MAKE) check-packages
 	@command -v git >/dev/null 2>&1 || { echo "git is required"; exit 1; }
 	@command -v $(STOW) >/dev/null 2>&1 || { echo "stow is required"; exit 1; }
 	@command -v rsync >/dev/null 2>&1 || { echo "rsync is required"; exit 1; }
+
+check-packages:
 	@test -n "$(PACKAGES)" || { echo "No packages listed in $(PACKAGES_FILE)"; exit 1; }
+
+check-stow:
+	@$(MAKE) check-packages
+	@command -v $(STOW) >/dev/null 2>&1 || { echo "stow is required"; exit 1; }
 
 antidote:
 	@if [[ ! -d "$$HOME/.antidote" ]]; then \
@@ -42,19 +52,19 @@ antidote:
 		echo "Antidote already present at $$HOME/.antidote"; \
 	fi
 
-stow: check
+stow: check-stow
 	$(STOW) $(STOW_FLAGS) $(PACKAGES)
 
-unstow: check
+unstow: check-stow
 	$(STOW) -D $(STOW_FLAGS) $(PACKAGES)
 
-restow: check
+restow: check-stow
 	$(STOW) -R $(STOW_FLAGS) $(PACKAGES)
 
-status: check
+status: check-stow
 	$(STOW) -nv $(STOW_FLAGS) $(PACKAGES)
 
-force-install: check
+force-install: check-stow
 	@set -euo pipefail; \
 	LOG_FILE="$(LOG_FILE)"; \
 	log(){ ts="$$(date +%Y-%m-%dT%H:%M:%S%z)"; msg="$$ts $$*"; echo "$$msg"; if [[ -n "$$LOG_FILE" ]]; then echo "$$msg" >>"$$LOG_FILE"; fi; }; \
@@ -142,22 +152,113 @@ backup:
 	done; \
 	echo "Backup created at $$BACKUP_DIR"
 
+list-backups:
+	@set -euo pipefail; \
+	if [[ ! -d "$(BACKUP_ROOT)" ]]; then \
+	  echo "No backups found under $(BACKUP_ROOT)"; \
+	  exit 0; \
+	fi; \
+	backups="$$(find "$(BACKUP_ROOT)" -mindepth 1 -maxdepth 1 -type d -print | LC_ALL=C sort)"; \
+	if [[ -z "$$backups" ]]; then \
+	  echo "No backups found under $(BACKUP_ROOT)"; \
+	  exit 0; \
+	fi; \
+	printf "%s\n" "$$backups"
+
 restore:
 	@set -euo pipefail; \
 	if [[ -z "$${BACKUP:-}" ]]; then \
 	  echo "Usage: make restore BACKUP=$$HOME/.dotfiles_backup/<timestamp>"; \
-	  echo "Available backups:"; ls -1 "$(BACKUP_ROOT)" 2>/dev/null || true; \
+	  echo "Available backups:"; \
+	  $(MAKE) list-backups; \
 	  exit 1; \
 	fi; \
 	BACKUP_PATH="$${BACKUP/#\~/$HOME}"; \
 	if [[ ! -d "$$BACKUP_PATH" ]]; then echo "Backup not found: $$BACKUP_PATH"; exit 1; fi; \
-	rsync -av --ignore-existing "$$BACKUP_PATH"/ "$$HOME"/
+	if command -v rsync >/dev/null 2>&1; then \
+	  rsync -av --ignore-existing "$$BACKUP_PATH"/ "$$HOME"/; \
+	else \
+	  echo "rsync not found; falling back to cp"; \
+	  find "$$BACKUP_PATH" -mindepth 1 -print | LC_ALL=C sort | while IFS= read -r src; do \
+	    rel="$${src#$$BACKUP_PATH/}"; \
+	    dest="$$HOME/$$rel"; \
+	    if [[ -e "$$dest" || -L "$$dest" ]]; then \
+	      continue; \
+	    fi; \
+	    mkdir -p "$$(dirname "$$dest")"; \
+	    cp -RPp "$$src" "$$dest"; \
+	  done; \
+	fi
+
+restore-latest:
+	@set -euo pipefail; \
+	if [[ ! -d "$(BACKUP_ROOT)" ]]; then \
+	  echo "No backups found under $(BACKUP_ROOT)"; \
+	  exit 1; \
+	fi; \
+	latest="$$(find "$(BACKUP_ROOT)" -mindepth 1 -maxdepth 1 -type d -print | LC_ALL=C sort | tail -n 1)"; \
+	if [[ -z "$$latest" ]]; then \
+	  echo "No backups found under $(BACKUP_ROOT)"; \
+	  exit 1; \
+	fi; \
+	echo "Restoring latest backup: $$latest"; \
+	$(MAKE) restore BACKUP="$$latest"
+
+restore-prompt:
+	@set -euo pipefail; \
+	if [[ ! -d "$(BACKUP_ROOT)" ]]; then \
+	  echo "No backups found under $(BACKUP_ROOT)"; \
+	  exit 1; \
+	fi; \
+	backups=(); \
+	while IFS= read -r backup; do \
+	  backups+=("$$backup"); \
+	done < <(find "$(BACKUP_ROOT)" -mindepth 1 -maxdepth 1 -type d -print | LC_ALL=C sort); \
+	if [[ "$${#backups[@]}" -eq 0 ]]; then \
+	  echo "No backups found under $(BACKUP_ROOT)"; \
+	  exit 1; \
+	fi; \
+	echo "Available backups:"; \
+	for i in "$${!backups[@]}"; do \
+	  printf "  %d. %s\n" "$$((i + 1))" "$${backups[$$i]}"; \
+	done; \
+	while true; do \
+	  printf "Choose backup number to restore (press Enter to cancel): "; \
+	  IFS= read -r choice; \
+	  if [[ -z "$$choice" ]]; then \
+	    echo "Restore canceled."; \
+	    exit 0; \
+	  fi; \
+	  if [[ "$$choice" =~ ^[0-9]+$$ ]] && (( choice >= 1 && choice <= $${#backups[@]} )); then \
+	    selected="$${backups[$$((choice - 1))]}"; \
+	    echo "Restoring backup: $$selected"; \
+	    $(MAKE) restore BACKUP="$$selected"; \
+	    exit 0; \
+	  fi; \
+	  echo "Invalid selection: $$choice"; \
+	done
 
 install:
 	@set -euo pipefail; \
 	LOG_FILE="$(LOG_FILE)"; \
 	log(){ ts="$$(date +%Y-%m-%dT%H:%M:%S%z)"; msg="$$ts $$*"; echo "$$msg"; if [[ -n "$$LOG_FILE" ]]; then echo "$$msg" >>"$$LOG_FILE"; fi; }; \
+	bootstrap_ran=0; \
 	log "Starting install (log: $$LOG_FILE)"; \
+	log "Validating package list"; $(MAKE) check-packages; \
+	if ! command -v git >/dev/null 2>&1 || ! command -v $(STOW) >/dev/null 2>&1 || ! command -v rsync >/dev/null 2>&1; then \
+		if [[ "$(OS)" == "Darwin" ]]; then \
+			log "Missing install prerequisites (git, stow, rsync); running macOS bootstrap install before continuing"; \
+			$(MAKE) macos ACTION=install; \
+			bootstrap_ran=1; \
+		elif [[ "$(OS)" == "Linux" ]]; then \
+			log "Missing install prerequisites (git, stow, rsync); running Debian bootstrap install before continuing"; \
+			$(MAKE) debian ACTION=install; \
+			bootstrap_ran=1; \
+		else \
+			log "Install prerequisites missing and no bootstrap script for OS=$(OS)"; \
+			exit 1; \
+		fi; \
+	fi; \
 	log "Running check"; $(MAKE) check; \
 	log "Running status (dry-run stow)"; \
 	if $(MAKE) status; then \
@@ -167,7 +268,9 @@ install:
 		exit 1; \
 	fi; \
 	log "Backing up existing files"; $(MAKE) backup; \
-	if [[ "$(OS)" == "Darwin" ]]; then \
+	if [[ "$$bootstrap_ran" -eq 1 ]]; then \
+	  log "Bootstrap install already ran earlier to restore missing prerequisites"; \
+	elif [[ "$(OS)" == "Darwin" ]]; then \
 	  log "Running macOS bootstrap install"; \
 	  $(MAKE) macos ACTION=install; \
 	elif [[ "$(OS)" == "Linux" ]]; then \

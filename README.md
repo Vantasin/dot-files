@@ -28,13 +28,14 @@ cd ~/Git/dot-files && make install
 ```
 > Use sudo only if required for package installs
 
-> What `make install` does: check → status (dry-run) → backup → bootstrap (packages) → antidote → stow.
-> If the dry-run reports conflicts, install stops immediately before backup/bootstrap and refuses to overwrite anything.
+> What `make install` does: validate the package list, bootstrap missing `git`/`stow`/`rsync` if needed, then run `check` → `status` (dry-run) → `backup` → bootstrap (if it did not already run) → antidote → stow.
+> If the dry-run reports conflicts, install stops before backup and refuses to overwrite anything.
 > On macOS, the bootstrap package set comes from the repo root [Brewfile](Brewfile) via `brew bundle`.
 > For a broader machine restore snapshot, use [Brewfile.complete](Brewfile.complete) intentionally instead of making it the default bootstrap manifest.
 > The repo does not install `~/.profile` or `~/.zprofile` by default.
 > Keep login-shell files local to each machine; see [shell/README.md](shell/README.md) for optional examples.
 > The canonical clone path in these docs is `~/Git/dot-files`.
+> After `make uninstall`, `make install` can restore the missing toolchain again as long as the underlying package manager (`brew` or `apt`) is still available.
 
 If `make install` reports conflicts you want renamed aside automatically, run:
 ```sh
@@ -64,7 +65,10 @@ chsh -s "$(command -v zsh)"
 - Rename conflicting targets aside and stow: `make force-install`
 - Remove links: `make unstow`
 - Back up existing files: `make backup`
+- List available backups: `make list-backups`
 - Restore missing files from a backup: `make restore BACKUP=~/.dotfiles_backup/<timestamp>`
+- Restore missing files from the newest backup: `make restore-latest`
+- Restore by choosing from a numbered prompt: `make restore-prompt`
 - Apply the baseline macOS bundle: `make macos ACTION=install`
 - Apply the complete macOS bundle snapshot: `make macos-complete`
 - Run the full install flow with the complete macOS bundle snapshot: `make install-complete`
@@ -72,12 +76,13 @@ chsh -s "$(command -v zsh)"
 Undo a normal install:
 ```sh
 cd ~/Git/dot-files
+make list-backups
 make uninstall
 make restore BACKUP=~/.dotfiles_backup/<timestamp>
 ```
 > Use `make uninstall` to remove the managed links and run the OS bootstrap uninstall path.
 > If you only want to remove the links and keep packages installed, use `make unstow` instead of `make uninstall`.
-> Use `make restore` for backups created by `make install` or `make backup`.
+> Use `make restore` or `make restore-latest` for backups created by `make install` or `make backup`.
 
 Undo a force-install:
 ```sh
@@ -92,12 +97,16 @@ DRY_RUN=0 scripts/rollback-force-install.sh   # apply (default)
 
 How restore works:
 ```sh
-ls -1 ~/.dotfiles_backup
+make list-backups
 make restore BACKUP=~/.dotfiles_backup/<timestamp>
+make restore-latest
+make restore-prompt
 ```
 > `make install` runs `make backup` first, so normal installs usually create a new timestamped backup under `~/.dotfiles_backup/`.
-> Choose the backup timestamp you want from `ls -1 ~/.dotfiles_backup`.
+> Choose the backup timestamp you want from `make list-backups`, use `make restore-latest` for the newest one, or use `make restore-prompt` for an interactive numbered picker.
 > `make restore` only restores files that do not currently exist; move or remove a current file first if you want the backup copy restored in its place.
+> `make restore` uses `rsync` when available and falls back to `cp` when it is not, so it still works after package uninstall on systems where `rsync` was repo-managed.
+> `make restore-prompt` is interactive by design; keep using `make restore BACKUP=...` for scripts or copied commands.
 > `make restore` is for backup directories. `scripts/rollback-force-install.sh` is only for files moved aside by `make force-install`.
 
 ## Repo Guide
