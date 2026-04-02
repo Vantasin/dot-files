@@ -13,6 +13,7 @@
 
 ## Support Directories
 - [../bootstrap/README.md](../bootstrap/README.md) — optional package installation scripts. Details: [bootstrap.md](bootstrap.md)
+- [../.githooks/README.md](../.githooks/README.md) — optional repo-local hooks for lightweight verification. Related: [git.md](git.md)
 - [../shell/README.md](../shell/README.md) — optional local login-shell examples. Details: [shell.md](shell.md)
 - [../scripts/README.md](../scripts/README.md) — maintenance scripts tied to install and rollback workflows. Related: [makefile.md](makefile.md)
 
