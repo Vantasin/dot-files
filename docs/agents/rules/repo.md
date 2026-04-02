@@ -12,7 +12,7 @@
 - `Brewfile.complete` is an optional complete-machine snapshot and should stay clearly distinct from the default bootstrap manifest.
 - `shell/` is for optional local login-shell examples and is not part of the active Stow package set.
 - `scripts/` is for maintenance helpers tied to documented workflows.
-- `reference/` is archival or upstream material and should not drive active behavior changes.
+- `.githooks/` is for optional repo-local hooks and should stay limited to local verification behavior.
 
 ## Platform Rules
 - Changes to shell config, `Makefile` logic, Stow workflows, and bootstrap behavior should preserve behavior across macOS, Debian, and Ubuntu unless explicitly documented otherwise.
@@ -35,6 +35,7 @@
 - Preserve the documented semantics of `make status`, `make install`, `make force-install`, `make backup`, `make restore`, `make stow`, and `make unstow`.
 - Prefer extending existing Make targets and variables over introducing parallel ad hoc shell flows.
 - Keep `STOW_FLAGS` aligned with the repo structure and docs, including ignore behavior for documentation-only files.
+- If docs show raw Stow commands, they must use the canonical flags from `STOW_FLAGS` or point users to the `make` targets instead.
 - If `Makefile` behavior changes, update `docs/makefile.md`, the root `README.md` when user-facing flow changes, and any affected workflow docs.
 
 ## Script Rules
@@ -72,8 +73,7 @@
 
 ## Layout And Ownership
 - Treat `packages.stow` as authoritative for active packages.
-- Keep active changes inside the package directories, `Makefile`, `bootstrap/`, and `docs/`.
-- Do not edit `reference/` unless the task is explicitly about archived or upstream material.
+- Keep active changes inside the package directories, `Makefile`, `bootstrap/`, `scripts/`, `.githooks/`, and `docs/`.
 
 ## Stow And Install Rules
 - Prefer `make status`, `make stow`, `make unstow`, `make restow`, `make install`, and `make force-install` over raw Stow commands.

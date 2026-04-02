@@ -7,8 +7,8 @@ This package stows ranger config into `~/.config/ranger/`.
 - `dot-config/ranger/rifle.conf`
 
 ## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" ranger`
+- Preferred: `make stow`
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" ranger`
 
 ## Related Docs
 - [../docs/ranger.md](../docs/ranger.md)

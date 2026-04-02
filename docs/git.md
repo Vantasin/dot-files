@@ -11,9 +11,10 @@
 - Includes `~/.gitconfig.local` if present so personal `user.name` and `user.email` can stay machine-local and out of the repo.
 
 ## Usage
-- Apply via Stow: `stow --dotfiles --target="$HOME" git`.
-- Edit `git/dot-gitconfig` to change settings; restow to apply.
-- Edit `git/dot-config/git/ignore` to change global ignore patterns; restow to apply.
+- Preferred: `make stow`.
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" git`.
+- Edit `git/dot-gitconfig` to change settings; rerun `make restow` to apply.
+- Edit `git/dot-config/git/ignore` to change global ignore patterns; rerun `make restow` to apply.
 - Put personal identity in `~/.gitconfig.local`, for example:
   ```ini
   [user]

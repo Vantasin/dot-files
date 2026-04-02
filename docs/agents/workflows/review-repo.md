@@ -12,7 +12,7 @@
 ## Review Pass
 1. Run `make status` to catch active Stow conflicts or package-layout problems.
 2. Compare `packages.stow` against the actual top-level package directories and `docs/packages.md`.
-3. Check `Makefile`, `README.md`, and `docs/` for stale package names, old commands, or mismatched install behavior.
+3. Check `Makefile`, `README.md`, package READMEs, and `docs/` for stale package names, old commands, mismatched install behavior, or raw Stow examples that omit the canonical flags.
 4. Look for repo-side junk that should not be stowed, such as metadata files or accidental host-local artifacts.
 5. For shell or bootstrap changes, run `bash -n` and `shellcheck` if available.
 6. If zsh startup behavior changed, open a new shell and confirm it starts cleanly and quickly.
@@ -26,6 +26,7 @@
 - `Makefile` behavior, `README.md`, and `docs/makefile.md` should agree on install, backup, restore, and force-install semantics.
 - `Brewfile`, `Brewfile.complete`, `bootstrap/macos.sh`, `docs/bootstrap.md`, and the macOS quick start in `README.md` should agree on which manifest is the default bootstrap source and which one is the broader snapshot.
 - Source-of-truth and drift-resolution rules should still hold: no known mismatch should be left split across code and docs.
+- Package READMEs and package docs should prefer the `make` targets; if they show raw Stow commands, those commands should include the canonical ignore flags from `STOW_FLAGS`.
 - Agent docs should point to real files and reflect the current repo structure.
 
 ## Finish

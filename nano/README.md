@@ -7,8 +7,8 @@ This package stows nano config and syntax files into `~/.config/nano/`.
 - `dot-config/nano/syntax/`
 
 ## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" nano`
+- Preferred: `make stow`
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" nano`
 
 ## Related Docs
 - [../docs/nano.md](../docs/nano.md)

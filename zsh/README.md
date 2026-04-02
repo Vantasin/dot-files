@@ -15,8 +15,8 @@ This package stows the interactive zsh environment, plugin list, and shared shel
 - After behavioral changes, open a new shell to verify startup is clean and fast.
 
 ## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" zsh`
+- Preferred: `make stow`
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" zsh`
 
 ## Related Docs
 - [../docs/zsh.md](../docs/zsh.md)

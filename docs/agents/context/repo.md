@@ -26,8 +26,9 @@
 - `bootstrap/` — optional package install and uninstall scripts for supported operating systems.
 - `docs/` — user and maintainer documentation for packages and workflows.
 - `docs/agents/` — agent-oriented context, rules, and workflows.
+- `scripts/` — maintenance helpers tied to install, rollback, and onboarding workflows.
+- `.githooks/` — optional repo-local Git hooks for lightweight local verification.
 - `shell/` — optional local login-shell examples that are not part of the active Stow package set.
-- `reference/` — legacy or upstream material that should not be treated as active config.
 
 ## Useful References
 - Install and stow behavior: [docs/makefile.md](../../makefile.md)
@@ -35,3 +36,5 @@
 - Zsh flow: [docs/zsh.md](../../zsh.md)
 - Local shell examples: [docs/shell.md](../../shell.md)
 - Bootstrap scripts: [docs/bootstrap.md](../../bootstrap.md)
+- Scripts index: [../../scripts/README.md](../../scripts/README.md)
+- Repo-local hooks: [../../.githooks/README.md](../../.githooks/README.md)

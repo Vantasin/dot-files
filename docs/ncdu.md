@@ -7,4 +7,5 @@
 - `config` for ncdu user-space preferences.
 
 ## Usage
-- Apply via Stow: `stow --dotfiles --target="$HOME" ncdu`.
+- Preferred: `make stow`.
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" ncdu`.

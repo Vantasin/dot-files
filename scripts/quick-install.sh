@@ -33,7 +33,7 @@ run() {
   fi
 }
 
-install_macos_prereqs() {
+ensure_macos_bootstrap() {
   if ! command -v brew >/dev/null 2>&1; then
     log "Homebrew not found; installing it first."
     if [[ "$DRY_RUN" == "1" ]]; then
@@ -58,21 +58,35 @@ install_macos_prereqs() {
   if [[ "$DRY_RUN" != "1" ]] && ! command -v brew >/dev/null 2>&1; then
     die "brew is required after Homebrew installation"
   fi
-
-  run brew install git stow rsync
 }
 
-install_debian_prereqs() {
+ensure_git_macos() {
+  if ! command -v git >/dev/null 2>&1; then
+    run brew install git
+  fi
+}
+
+ensure_repo_prereqs_debian() {
   command -v apt-get >/dev/null 2>&1 || die "apt-get is required on Linux for quick-install.sh"
 
-  local -a prefix=()
-  if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
-    command -v sudo >/dev/null 2>&1 || die "sudo is required when not running as root"
-    prefix=(sudo)
+  local -a packages=()
+  if ! command -v git >/dev/null 2>&1; then
+    packages+=(git)
+  fi
+  if ! command -v make >/dev/null 2>&1; then
+    packages+=(make)
   fi
 
-  run "${prefix[@]}" apt-get update
-  run "${prefix[@]}" apt-get install -y git stow rsync
+  if [[ "${#packages[@]}" -gt 0 ]]; then
+    local -a prefix=()
+    if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
+      command -v sudo >/dev/null 2>&1 || die "sudo is required when not running as root"
+      prefix=(sudo)
+    fi
+
+    run "${prefix[@]}" apt-get update
+    run "${prefix[@]}" apt-get install -y "${packages[@]}"
+  fi
 }
 
 ensure_repo_clone() {
@@ -103,10 +117,11 @@ run_repo_install() {
 main() {
   case "$OS_NAME" in
     Darwin)
-      install_macos_prereqs
+      ensure_macos_bootstrap
+      ensure_git_macos
       ;;
     Linux)
-      install_debian_prereqs
+      ensure_repo_prereqs_debian
       ;;
     *)
       die "Unsupported OS for quick-install.sh: $OS_NAME"

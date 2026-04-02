@@ -6,8 +6,8 @@ This package stows bat config into `~/.config/bat/`.
 - `dot-config/bat/config`
 
 ## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" bat`
+- Preferred: `make stow`
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" bat`
 
 ## Related Docs
 - [../docs/bat.md](../docs/bat.md)

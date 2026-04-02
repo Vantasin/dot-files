@@ -9,8 +9,8 @@ This package stows fastfetch config into `~/.config/fastfetch/`.
 - The config is tuned for specific disk mounts. Review `folders` entries before relying on the disk modules everywhere.
 
 ## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" fastfetch`
+- Preferred: `make stow`
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" fastfetch`
 
 ## Related Docs
 - [../docs/fastfetch.md](../docs/fastfetch.md)

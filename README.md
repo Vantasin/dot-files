@@ -5,36 +5,16 @@
 - Manages user-space configs only: zsh, git, tmux, ranger, fastfetch, btop, bat, ncdu, nano. No system services.
 - Stow handles placement; Antidote handles plugins; package managers (or bootstrap scripts) handle binaries.
 
-## Quick Start (copy/paste)
+## Quick Start
 
-macOS:
-```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-if [ -x /opt/homebrew/bin/brew ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [ -x /usr/local/bin/brew ]; then
-  eval "$(/usr/local/bin/brew shellenv)"
-fi
-brew install git stow rsync
-git clone https://github.com/Vantasin/dot-files.git ~/Git/dot-files
-cd ~/Git/dot-files && make install
-```
-
-Debian/Ubuntu:
-```sh
-sudo apt-get update && sudo apt-get install -y git stow rsync
-git clone https://github.com/Vantasin/dot-files.git ~/Git/dot-files
-cd ~/Git/dot-files && make install
-```
-> Use sudo only if required for package installs
-> The explicit commands above remain the recommended quick start.
-
-Optional convenience installer:
+Fast path:
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Vantasin/dot-files/main/scripts/quick-install.sh)"
 ```
-> This one-command installer auto-detects macOS vs Debian/Ubuntu, installs `git`/`stow`/`rsync`, clones to `~/Git/dot-files`, and runs `make install`.
+> This one-command installer auto-detects macOS vs Debian/Ubuntu, bootstraps the minimum needed to fetch the repo and run `make install`, clones to `~/Git/dot-files`, and runs `make install`.
+> It bootstraps only what is needed to fetch the repo and start the repo-managed install flow, then lets `make install` handle the rest of the toolchain.
 > Override the clone path with `CLONE_DIR=...`. Preview without changes with `DRY_RUN=1`.
+> Prefer the manual setup if you want to review each step first: [docs/manual-install.md](docs/manual-install.md).
 
 > What `make install` does: validate the package list, bootstrap missing `git`/`stow`/`rsync` if needed, then run `check` → `status` (dry-run) → `backup` → bootstrap (if it did not already run) → antidote → stow.
 > If the dry-run reports conflicts, install stops before backup and refuses to overwrite anything.
@@ -120,6 +100,7 @@ make restore-prompt
 ## Repo Guide
 
 - Docs hub: [docs/README.md](docs/README.md)
+- Manual install guide: [docs/manual-install.md](docs/manual-install.md)
 - Stow, install, backup, and restore behavior: [docs/makefile.md](docs/makefile.md)
 - macOS package manifests and bootstrap notes: [Brewfile](Brewfile), [Brewfile.complete](Brewfile.complete), [docs/bootstrap.md](docs/bootstrap.md)
 - Package index and per-package links: [docs/packages.md](docs/packages.md)

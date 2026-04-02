@@ -10,7 +10,8 @@
 - `Brewfile` is the default repo-focused macOS Homebrew package manifest used by `bootstrap/macos.sh`.
 - `Brewfile.complete` is an optional full-machine Homebrew Bundle snapshot and is not the default bootstrap manifest.
 - `shell/` holds optional local login-shell examples and is not part of the active Stow package set.
-- `reference/` contains legacy or upstream copies and is not part of the active install flow.
+- `scripts/` contains maintenance helpers tied to documented workflows.
+- `.githooks/` contains optional repo-local hooks and is not part of the active install flow.
 - `bootstrap/` contains optional OS package installers (`macos.sh`, `debian.sh`).
 
 ## Read Next
@@ -34,7 +35,6 @@
 - Human-readable audit trail: [docs/changelog/README.md](docs/changelog/README.md)
 
 ## Non-Negotiables
-- Do not edit `reference/` for active behavior changes.
 - Do not commit secrets, machine-specific paths, or other host-local state.
 - Prefer `make` targets over ad hoc commands when the target already exists.
 - Validate relevant changes with `make status`; for shell changes also sanity-check with `bash -n` or `shellcheck` if available, then open a new shell.

@@ -6,8 +6,8 @@ This package stows ncdu config into `~/.config/ncdu/`.
 - `dot-config/ncdu/config`
 
 ## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" ncdu`
+- Preferred: `make stow`
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" ncdu`
 
 ## Related Docs
 - [../docs/ncdu.md](../docs/ncdu.md)

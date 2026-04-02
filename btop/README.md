@@ -6,8 +6,8 @@ This package stows btop config into `~/.config/btop/`.
 - `dot-config/btop/btop.conf`
 
 ## Apply
-- `make stow`
-- `stow --dotfiles --target="$HOME" btop`
+- Preferred: `make stow`
+- One-package raw Stow: `stow --dotfiles --ignore='(\.DS_Store|README\.md)$' --target="$HOME" btop`
 
 ## Related Docs
 - [../docs/btop.md](../docs/btop.md)
