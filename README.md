@@ -27,6 +27,14 @@ git clone https://github.com/Vantasin/dot-files.git ~/Git/dot-files
 cd ~/Git/dot-files && make install
 ```
 > Use sudo only if required for package installs
+> The explicit commands above remain the recommended quick start.
+
+Optional convenience installer:
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Vantasin/dot-files/main/scripts/quick-install.sh)"
+```
+> This one-command installer auto-detects macOS vs Debian/Ubuntu, installs `git`/`stow`/`rsync`, clones to `~/Git/dot-files`, and runs `make install`.
+> Override the clone path with `CLONE_DIR=...`. Preview without changes with `DRY_RUN=1`.
 
 > What `make install` does: validate the package list, bootstrap missing `git`/`stow`/`rsync` if needed, then run `check` → `status` (dry-run) → `backup` → bootstrap (if it did not already run) → antidote → stow.
 > If the dry-run reports conflicts, install stops before backup and refuses to overwrite anything.
