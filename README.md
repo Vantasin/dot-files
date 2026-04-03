@@ -59,6 +59,8 @@ chsh -s "$(command -v zsh)"
 - Restore by choosing from a numbered prompt: `make restore-prompt`
 - Apply the baseline macOS bundle: `make macos ACTION=install`
 - Apply the complete macOS bundle snapshot: `make macos-complete`
+- Verify `Brewfile.complete` matches the current Mac: `make verify-brewfile-complete`
+- Refresh `Brewfile.complete` from the current Mac: `make refresh-brewfile-complete`
 - Run the full install flow with the complete macOS bundle snapshot: `make install-complete`
 
 Undo a normal install:

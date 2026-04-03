@@ -13,6 +13,8 @@
 - Full `make install` may invoke the OS bootstrap earlier when `git`, `stow`, or `rsync` are missing, so reinstall after `make uninstall` can recover without a separate manual bootstrap step as long as `brew` or `apt` is still available.
 - To apply a broader machine snapshot intentionally, use `make macos-complete` or override the manifest directly with `make macos ACTION=install BREWFILE=Brewfile.complete`.
 - To run the full dotfiles install flow with the broader snapshot, use `make install-complete`.
+- To compare `Brewfile.complete` to the current machine state without rewriting the tracked file, use `make verify-brewfile-complete`.
+- To refresh `Brewfile.complete` from the current machine state intentionally, use `make refresh-brewfile-complete` and review the resulting diff before committing it.
 - macOS uninstall removes Brewfile-declared formulae, casks, and taps; it does not use `brew bundle cleanup`, which would target undeclared packages instead.
 - Debian install attempts core packages individually; optional packages are attempted if available.
 - Debian uninstall removes the same apt package sets; neither uninstall path touches backups or `~/.antidote`.
@@ -27,5 +29,7 @@
 ## Package Sources
 - macOS baseline (Homebrew): declared in the repo root [../Brewfile](../Brewfile).
 - macOS complete snapshot (Homebrew): declared in [../Brewfile.complete](../Brewfile.complete), generated from the current machine with `brew bundle dump --file=Brewfile.complete --force`.
-- When validating `Brewfile.complete`, use `brew bundle check --no-upgrade --file=Brewfile.complete` so the snapshot is checked for presence without failing on merely outdated packages.
+- When validating that the snapshot is still installed, use `brew bundle check --no-upgrade --file=Brewfile.complete`.
+- When validating that the snapshot still matches the current machine state, use `make verify-brewfile-complete` or compare against a temporary `brew bundle dump`.
+- When intentionally updating the tracked snapshot, use `make refresh-brewfile-complete` and then review the diff before committing.
 - Debian/Ubuntu (apt): declared in `bootstrap/debian.sh`, with a separate optional package list.

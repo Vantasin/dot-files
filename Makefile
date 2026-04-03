@@ -8,7 +8,7 @@ BACKUP_ROOT := $(HOME)/.dotfiles_backup
 TIMESTAMP := $(shell date +%Y%m%d-%H%M%S)
 LOG_FILE ?= $(HOME)/.dotfiles_install.log
 
-.PHONY: help check check-packages check-stow antidote stow unstow restow status force-install macos macos-complete debian install install-complete uninstall backup list-backups restore restore-latest restore-prompt
+.PHONY: help check check-packages check-stow antidote stow unstow restow status force-install macos macos-complete verify-brewfile-complete refresh-brewfile-complete debian install install-complete uninstall backup list-backups restore restore-latest restore-prompt
 
 help:
 	@printf "Targets:\n"
@@ -30,6 +30,8 @@ help:
 	@printf "  uninstall   Unstow dotfiles; optionally call OS bootstrap uninstall\n"
 	@printf "  macos       Run bootstrap/macos.sh with the given ACTION (install/uninstall)\n"
 	@printf "  macos-complete Run bootstrap/macos.sh install with Brewfile.complete\n"
+	@printf "  verify-brewfile-complete Compare Brewfile.complete to a fresh Homebrew Bundle dump\n"
+	@printf "  refresh-brewfile-complete Rewrite Brewfile.complete from the current Mac state\n"
 	@printf "  debian      Run bootstrap/debian.sh with the given ACTION (install/uninstall)\n"
 
 check:
@@ -120,6 +122,36 @@ macos:
 
 macos-complete:
 	@$(MAKE) macos ACTION=install BREWFILE=Brewfile.complete
+
+verify-brewfile-complete:
+	@set -euo pipefail; \
+	if [[ "$(OS)" != "Darwin" ]]; then \
+	  echo "verify-brewfile-complete is supported on macOS only"; \
+	  exit 1; \
+	fi; \
+	command -v brew >/dev/null 2>&1 || { echo "brew is required"; exit 1; }; \
+	test -f Brewfile.complete || { echo "Brewfile.complete not found"; exit 1; }; \
+	tmp="$$(mktemp -t Brewfile.complete.check)"; \
+	trap 'rm -f "$$tmp"' EXIT; \
+	brew bundle dump --file="$$tmp" --force >/dev/null; \
+	if diff -u Brewfile.complete "$$tmp"; then \
+	  echo "Brewfile.complete matches the current machine state."; \
+	else \
+	  echo "Brewfile.complete differs from the current machine state."; \
+	  exit 1; \
+	fi
+
+refresh-brewfile-complete:
+	@set -euo pipefail; \
+	if [[ "$(OS)" != "Darwin" ]]; then \
+	  echo "refresh-brewfile-complete is supported on macOS only"; \
+	  exit 1; \
+	fi; \
+	command -v brew >/dev/null 2>&1 || { echo "brew is required"; exit 1; }; \
+	test -f Brewfile.complete || { echo "Brewfile.complete not found"; exit 1; }; \
+	brew bundle dump --file=Brewfile.complete --force >/dev/null; \
+	echo "Refreshed Brewfile.complete from the current machine state."; \
+	echo "Review git diff before committing."
 
 debian:
 	@if [[ -x "bootstrap/debian.sh" ]]; then \
