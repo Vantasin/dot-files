@@ -21,7 +21,7 @@ alias du='du -h'
 
 command -v batcat >/dev/null 2>&1 && alias bat='batcat'
 
-alias gs='git status -sb'
+alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
 alias gp='git push'
