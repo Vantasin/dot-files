@@ -27,6 +27,7 @@ alias gc='git commit'
 alias gp='git push'
 alias gl='git pull'
 alias gco='git checkout'
+alias gr='git remote -v'
 
 alias v='${EDITOR:-vi}'
 alias tldr='tldr --color=always'
