@@ -8,6 +8,7 @@
 - Uses user-space paths; does not touch system git config.
 - Sets `core.excludesFile` to `~/.config/git/ignore` for global ignore patterns managed by this repo.
 - The managed global ignore file is the right place for editor/workspace metadata such as `.obsidian/`.
+- Sets `push.autoSetupRemote = true` so the first `git push` from a new branch creates the upstream tracking branch.
 - Includes `~/.gitconfig.local` if present so personal `user.name` and `user.email` can stay machine-local and out of the repo.
 
 ## Usage

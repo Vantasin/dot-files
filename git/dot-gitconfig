@@ -18,6 +18,7 @@
 
 [push]
 	default = simple
+	autoSetupRemote = true
 
 [merge]
 	conflictstyle = zdiff3
