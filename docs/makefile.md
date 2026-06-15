@@ -23,8 +23,8 @@
 - `make antidote` — installs Antidote to `~/.antidote` if missing.
 - `make macos|debian ACTION=install|uninstall` — run OS package installs/removals only. On macOS, `make macos ACTION=install` applies the repo root `Brewfile`, and `BREWFILE=...` can point at an alternate manifest such as `Brewfile.complete`.
 - `make macos-complete` — macOS bootstrap only, but with `Brewfile.complete`.
-- `make verify-brewfile-complete` — macOS-only verification target that compares `Brewfile.complete` to a fresh temporary `brew bundle dump` without overwriting the tracked file.
-- `make refresh-brewfile-complete` — macOS-only update target that rewrites `Brewfile.complete` from the current machine state and reminds you to review the diff before committing.
+- `make verify-brewfile-complete` — macOS-only verification target that compares `Brewfile.complete` to a fresh temporary `brew bundle dump` plus the repo's stable snapshot heading, without overwriting the tracked file.
+- `make refresh-brewfile-complete` — macOS-only update target that rewrites `Brewfile.complete` from the current machine state, preserves the repo's stable snapshot heading, and reminds you to review the diff before committing.
 - `make install-complete` — full install flow using `Brewfile.complete` for the macOS bootstrap step.
 
 ## Backup/Restore Scope
