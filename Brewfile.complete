@@ -90,6 +90,8 @@ brew "python@3.11"
 brew "python@3.12"
 # File browser
 brew "ranger"
+# Docker and OCI Registry Client in Go and tooling using those libraries
+brew "regclient"
 # Fast, efficient and secure backup program
 brew "restic"
 # Command-line toolbox for fancy output in the terminal
