@@ -55,6 +55,10 @@ brew "jq"
 brew "lazygit"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# Fast, flexible, config-based cli for linting Markdown/CommonMark files
+brew "markdownlint-cli2"
 # Terminal-based visual file manager
 brew "midnight-commander"
 # Automated testing for Ansible roles
@@ -73,8 +77,6 @@ brew "ncdu"
 brew "neovim"
 # Port scanning utility for large networks
 brew "nmap"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
 # 7-Zip (high compression file archiver) implementation
 brew "p7zip"
 # Framework for layout and rendering of i18n text
