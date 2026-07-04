@@ -107,6 +107,8 @@ brew "restic"
 brew "rich-cli"
 # Utility that provides fast incremental file transfer
 brew "rsync"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
 # Non-interactive SSH password auth
 brew "sshpass"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
