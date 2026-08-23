@@ -61,6 +61,8 @@ brew "node"
 brew "markdownlint-cli2"
 # Terminal-based visual file manager
 brew "midnight-commander"
+# Run LLMs with MLX
+brew "mlx-lm"
 # Automated testing for Ansible roles
 brew "molecule"
 # SMTP client that can be used as an SMTP plugin for Mutt
@@ -77,6 +79,10 @@ brew "ncdu"
 brew "neovim"
 # Port scanning utility for large networks
 brew "nmap"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# AI coding agent, built for the terminal
+brew "opencode"
 # 7-Zip (high compression file archiver) implementation
 brew "p7zip"
 # Framework for layout and rendering of i18n text
@@ -99,6 +105,8 @@ brew "pyenv"
 brew "python@3.11"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.12"
+# AI-powered command-line workflow tool for developers
+brew "qwen-code"
 # File browser
 brew "ranger"
 # Docker and OCI Registry Client in Go and tooling using those libraries
@@ -107,8 +115,6 @@ brew "regclient"
 brew "restic"
 # Command-line toolbox for fancy output in the terminal
 brew "rich-cli"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # Utility that provides fast incremental file transfer
 brew "rsync"
 # Static analysis and lint tool, for (ba)sh scripts
@@ -192,6 +198,8 @@ cask "nextcloud"
 cask "obs"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# Get up and running with large language models locally
+cask "ollama-app"
 # Imaging utility to install operating systems to a microSD card
 cask "raspberry-pi-imager"
 # Music streaming service
