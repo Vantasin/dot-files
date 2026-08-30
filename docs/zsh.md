@@ -17,7 +17,8 @@
 ## History
 - Config lives only in `dot-config/shell/history.zsh`.
 - `HISTFILE=${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history`, `HISTSIZE/SAVEHIST=10000`.
-- Options: `APPEND_HISTORY`, `INC_APPEND_HISTORY`, `SHARE_HISTORY`, `HIST_FCNTL_LOCK`, `HIST_IGNORE_DUPS`, `HIST_IGNORE_ALL_DUPS`, `HIST_REDUCE_BLANKS`.
+- Options: `APPEND_HISTORY`, `SHARE_HISTORY`, `HIST_IGNORE_DUPS`, `HIST_IGNORE_ALL_DUPS`, `HIST_REDUCE_BLANKS`.
+- Native `SHARE_HISTORY` owns incremental persistence and synchronization across shells; no prompt, directory-change, or exit hooks write history manually.
 
 ## Prompt & VCS
 - `prompt.zsh` uses `vcs_info`; hooks on `precmd` and `chpwd`; seeds once on startup; clears when outside a repo.

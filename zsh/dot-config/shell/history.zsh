@@ -7,9 +7,7 @@ SAVEHIST=10000
 
 setopt \
   append_history \
-  inc_append_history \
   share_history \
-  hist_fcntl_lock \
   hist_ignore_dups \
   hist_ignore_all_dups \
   hist_reduce_blanks
