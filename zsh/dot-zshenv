@@ -10,10 +10,40 @@ path=(
   "$HOME/.local/bin"
   "/opt/homebrew/bin"
   "/usr/local/bin"
-  $path
+  "${path[@]}"
 )
 export PATH
 
 export EDITOR="${EDITOR:-nano}"
 export VISUAL="${VISUAL:-$EDITOR}"
 export PAGER="${PAGER:-less}"
+
+# Prefer Bitwarden's SSH agent when an installed desktop client exposes one.
+# If none of the supported sockets exists, leave the inherited agent untouched.
+typeset -a _bitwarden_ssh_agent_sockets
+case "${OSTYPE:-}" in
+  darwin*)
+    _bitwarden_ssh_agent_sockets=(
+      "$HOME/Library/Containers/com.bitwarden.desktop/Data/.bitwarden-ssh-agent.sock"
+      "$HOME/.bitwarden-ssh-agent.sock"
+    )
+    ;;
+  linux*)
+    _bitwarden_ssh_agent_sockets=(
+      "$HOME/.bitwarden-ssh-agent.sock"
+      "$HOME/snap/bitwarden/current/.bitwarden-ssh-agent.sock"
+      "$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock"
+    )
+    ;;
+  *)
+    _bitwarden_ssh_agent_sockets=("$HOME/.bitwarden-ssh-agent.sock")
+    ;;
+esac
+
+for _bitwarden_ssh_agent_socket in "${_bitwarden_ssh_agent_sockets[@]}"; do
+  if [[ -S "$_bitwarden_ssh_agent_socket" ]]; then
+    export SSH_AUTH_SOCK="$_bitwarden_ssh_agent_socket"
+    break
+  fi
+done
+unset _bitwarden_ssh_agent_socket _bitwarden_ssh_agent_sockets

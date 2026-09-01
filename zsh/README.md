@@ -11,6 +11,7 @@ This package stows the interactive zsh environment, plugin list, and shared shel
 ## Notes
 - Plugins are managed with Antidote.
 - Shared shell config lives under `dot-config/shell/`.
+- `.zshenv` selects a supported Bitwarden SSH Agent socket when one exists and otherwise preserves the inherited agent.
 - Login-shell files such as `~/.zprofile` remain local to each machine.
 - After behavioral changes, open a new shell to verify startup is clean and fast.
 

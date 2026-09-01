@@ -1,7 +1,4 @@
-# Global Git configuration. Personal identity is loaded from ~/.gitconfig.local if present.
-
-[include]
-	path = ~/.gitconfig.local
+# Global Git configuration. Host-local settings load last from ~/.gitconfig.local.
 
 [init]
 	defaultBranch = main
@@ -22,3 +19,15 @@
 
 [merge]
 	conflictstyle = zdiff3
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
+
+[user]
+	signingkey = ~/.ssh/git_signing_key.pub
+
+[include]
+	path = ~/.gitconfig.local

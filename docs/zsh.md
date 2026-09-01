@@ -1,7 +1,7 @@
 # Zsh Notes
 
 ## Layout & Flow
-- `zsh/dot-zshenv` — minimal env; sets XDG paths; fast, non-interactive-safe; delegates interactivity to `.zshrc`.
+- `zsh/dot-zshenv` — minimal env; sets XDG paths, resolves supported Bitwarden SSH Agent sockets without output, and delegates interactivity to `.zshrc`.
 - `zsh/dot-zshrc` — interactive: sources exports, creates cache (`~/.cache/zsh`) and state (`~/.local/state/zsh`) dirs, runs `compinit` with cached compdump, loads modules, then Antidote plugins, then optional fastfetch.
 - `zsh/dot-config/shell/*.zsh` — loaded in order: `history` → `aliases` → `functions` → `keybinds` → `prompt`. History runs before plugins so autosuggestions see shared history.
 
@@ -9,6 +9,11 @@
 - This repo configures zsh after zsh starts.
 - It does not install `~/.profile` or `~/.zprofile` by default.
 - If you keep machine-local login-shell files, keep them separate from the active Stow package set. See [shell.md](shell.md).
+
+## Bitwarden SSH Agent
+- `.zshenv` prefers a valid Bitwarden Unix socket in platform order: macOS App Store then DMG, or native Linux then Snap then Flatpak.
+- When no supported Bitwarden socket exists, the inherited `SSH_AUTH_SOCK` is preserved unchanged.
+- Resolution belongs in `.zshenv` because non-interactive zsh commands, including Git's `ssh-keygen` signing subprocess, also need the selected environment. Git signing setup and the complete socket list are documented in [git.md](git.md).
 
 ## Plugins (Antidote)
 - Installed at `~/.antidote`; plugin list in `~/.zsh_plugins.txt`.
