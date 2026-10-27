@@ -147,6 +147,8 @@ brew "zsh"
 cask "audacity"
 # Tool to flash OS images to SD cards & USB drives
 cask "balenaetcher"
+# Online gaming platform
+cask "battle-net"
 # 3D creation suite
 cask "blender"
 # OpenAI's official ChatGPT desktop app
@@ -162,6 +164,8 @@ cask "docker-desktop"
 cask "font-hack-nerd-font"
 # 3D parametric modeller
 cask "freecad"
+# Kext-less implementation of FUSE
+cask "fuse-t"
 # Free and open-source image editor
 cask "gimp"
 # Desktop client for GitHub repositories
@@ -217,7 +221,7 @@ cask "telegram"
 # Virtual machines UI using QEMU
 cask "utm"
 # Disk encryption software focusing on security based on TrueCrypt
-cask "veracrypt"
+cask "veracrypt-fuse-t"
 # Open-source code editor
 cask "visual-studio-code"
 # Multimedia player
