@@ -125,8 +125,6 @@ brew "shellcheck"
 brew "sshpass"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
-# Command-line tool to interact with Gitea servers
-brew "tea"
 # Official tldr client written in Rust
 brew "tlrc"
 # Terminal multiplexer
